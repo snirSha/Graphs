@@ -1,21 +1,23 @@
 package dataStructure;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 public class DGraph implements graph{
-
+	
+	HashMap<Integer, node_data> hm = new HashMap<>();
+	
 	public node_data getNode(int key) {
-		// TODO Auto-generated method stub
-		return null;
+		return hm.get(key);
 	}
 
 	public edge_data getEdge(int src, int dest) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	public void addNode(node_data n) {
-		// TODO Auto-generated method stub
+		hm.put(n.getKey(), n);
 		
 	}
 
