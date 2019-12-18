@@ -24,7 +24,7 @@ public class Node implements node_data{
 	
 	public Node(Point3D p, double w, String s, int t) {
 		this._data++;
-		this._p=new Point3D(_p);
+		this._p=new Point3D(p);
 		this._weight=w;
 		this._info=s;
 		this._tag=t;

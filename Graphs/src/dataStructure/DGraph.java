@@ -86,7 +86,6 @@ public class DGraph implements graph{
 		else {
 			return null;
 		}
-			
 	}
 
 	@Override
