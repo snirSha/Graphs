@@ -40,7 +40,7 @@ public class Graph_GUI {
 	public double getIncline(double x1,double y1,double x2,double y2) {
 		if(x1!=x2)
 			return (y1-y2)/(x1-x2);
-		return 0;
+		return Integer.MAX_VALUE;
 	}
 	
 	
