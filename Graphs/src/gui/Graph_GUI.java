@@ -11,7 +11,7 @@ import utils.Point3D;
 import utils.StdDraw;
 
 public class Graph_GUI {
-	DGraph g=new DGraph();
+	DGraph g = new DGraph();
 //	ArrayList<Node> nodes=new ArrayList<>();
 	
 	public Graph_GUI() {
@@ -28,6 +28,10 @@ public class Graph_GUI {
 		StdDraw.setPenRadius(0.05);
 		StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
 		StdDraw.point(x,y);
+		StdDraw.setPenColor(StdDraw.BLACK);
+		String abs=a.getKey()+"";
+		StdDraw.text(x,y,abs);
+		
 	}
 	public void addEdge(Node src,Node dest,int w) {	//c055    x1,y1------>x2,y2  m
 		double Sx=src.getLocation().x();
@@ -37,6 +41,7 @@ public class Graph_GUI {
 		
 		g.addNode(src);
 		g.addNode(dest);
+		
 		StdDraw.setPenRadius(0.005);
 		StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in black
 		StdDraw.line(Sx,Sy,Dx,Dy);
@@ -52,37 +57,43 @@ public class Graph_GUI {
 		StdDraw.setPenRadius(0.1);
 		StdDraw.setPenColor(Color.BLACK);
 		StdDraw.text((Sx+Dx)/2, (Sy+Dy)/2, te);
+		
 	}
 	
 	private double getIncline(double x1,double y1,double x2,double y2) {
 		if(x1!=x2)
 			return (y1-y2)/(x1-x2);
-		return 0;
+		return Integer.MAX_VALUE;
 	}
 	private Point3D getArrow(double Sx,double Sy,double Dx,double Dy) {
 		double newX,newY;
 		double m=getIncline(Sx,Sy,Dx,Dy);
 		Point3D ans;
+		int dif = 4;
 		if(Sx<Dx) {
-			newX = Dx-1;
+			newX = Dx-dif;
 			newY = m*(newX-Dx)+Dy;
 		}
 		else if(Sx>Dx) {
-			newX = Dx+1;
+			newX = Dx+dif;
 			newY = m*(newX-Dx)+Dy;
 		}
 		else {
 			if(Dy<0) {
 				newX=0;
-				newY=Dy+1;
+				newY=Dy+dif;
 			}
 			else {
 				newX=0;
-				newY=Dy-1;
+				newY=Dy-dif;
 			}			
 		}
 		ans=new Point3D(newX,newY);	
 		return ans;
+	}
+	
+	public void drawDGraph() {
+		
 	}
 	
 	

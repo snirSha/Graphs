@@ -1,4 +1,5 @@
 package dataStructure;
+import java.io.Serializable;
 import java.util.Collection;
 /**
  * This interface represents a directional weighted graph.
@@ -7,7 +8,7 @@ import java.util.Collection;
  *
  */
 
-public interface graph {
+public interface graph extends Serializable{
 	/**
 	 * return the node_data by the node_id,
 	 * @param key - the node_id

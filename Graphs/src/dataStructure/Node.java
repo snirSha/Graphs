@@ -7,8 +7,8 @@ import utils.Point3D;
 public class Node implements node_data{
 
 	private HashMap<Integer, Edge> edgesOf= new HashMap<>(); //b.key,a->b     c.key,b->c     d.key,c->d     a.key,d->a  |  Edge.dest.key,Edge
-	
-	private int _data=0;
+	private static int count = 0;
+	private int _data;
 	private Point3D _p;
 	private double _weight;
 	private String _info;
@@ -16,6 +16,8 @@ public class Node implements node_data{
 	
 	
 	public Node() {
+		this._data = count;
+		count++;
 		this._p=null;
 		this._weight=0;
 		this._tag=0;
@@ -23,7 +25,8 @@ public class Node implements node_data{
 	}
 	
 	public Node(Point3D p, double w, String s, int t) {
-		this._data++;
+		this._data = count;
+		count++;
 		this._p=new Point3D(p);
 		this._weight=w;
 		this._info=s;
