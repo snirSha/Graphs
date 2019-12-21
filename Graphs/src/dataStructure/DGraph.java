@@ -3,6 +3,7 @@ package dataStructure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import gui.Graph_GUI;
 import utils.StdDraw;
@@ -31,25 +32,23 @@ public class DGraph implements graph{
 
 	public void connect(int src, int dest, double w) {
 		try{
-			
-			Node s=(Node) nodes.get(src);
-			Edge e=new Edge(src,dest,w);
-			
-			s.addEdge(e);
-
-			changes++;//adding an edge
-			counterEdges++;
-
+			if(nodes.containsKey(src) && nodes.containsKey(dest)) {
+				Node s=(Node) nodes.get(src);
+				Edge e=new Edge(src,dest,w);
+				s.addEdge(e);
+				changes++;//adding an edge
+				counterEdges++;
+			}
+			else {
+				System.out.println("src or dst doesnt exist");
+			}
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
 	}
 
 	public Collection<node_data> getV() {
-		Collection<node_data> list=new ArrayList<node_data>();  
-		list.addAll(nodes.values());
-		return list;
+		return nodes.values();
 	}
 
 	public Collection<edge_data> getE(int node_id) {
@@ -64,21 +63,27 @@ public class DGraph implements graph{
 	@Override
 	public node_data removeNode(int key) {
 		try {
-		Node n=(Node) nodes.get(key);//find all the edges that connected to node(key)
-		int count=n.getEdgesOf().size();//every edge that we delete the counter goes down by one
-		counterEdges-=count;
-		n.getEdgesOf().clear();
+			if(nodes.containsKey(key)) {
+					
+				Node n=(Node) nodes.get(key);//find all the edges that connected to node(key)
+				int count=n.getEdgesOf().size();//every edge that we delete the counter goes down by one
+				counterEdges-=count;
+				n.getEdgesOf().clear();
 
-
-		for(node_data a:nodes.values()) {
-			Node tmp=(Node)a;
-			if(tmp.getEdgesOf().get(key)!=null) {
-				tmp.getEdgesOf().remove(key);
-				counterEdges--;
+				for(node_data a:nodes.values()) {
+					Node tmp=(Node)a;
+					if(tmp.getEdgesOf().get(key)!=null) {
+						tmp.getEdgesOf().remove(key);
+					}
+				}
+				changes++;//removing node
+				return nodes.remove(key);
+				
+			}else {
+				System.out.println("key doesnt exist");
+				return null;
 			}
-		}
-		changes++;//removing node
-		return nodes.remove(key);
+			
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -87,7 +92,7 @@ public class DGraph implements graph{
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		
+
 		Node n=(Node) nodes.get(src);
 		HashMap<Integer,Edge> edgesOfSrc=n.getEdgesOf();
 		edge_data ss= edgesOfSrc.remove(dest);
@@ -112,10 +117,9 @@ public class DGraph implements graph{
 	public int getMC() {
 		return changes;
 	}
-	
-	public void reversedGraph1() {
-		StdDraw.clear();
 
+	public void reversedGraph1() {
+		
 		DGraph reversedG=new DGraph();
 		Collection<node_data> n=this.getV();
 		for(node_data a:n) {
@@ -123,13 +127,9 @@ public class DGraph implements graph{
 			Collection<edge_data> tmp=this.getE(a.getKey());
 			for(edge_data e:tmp) {
 				System.out.println(e.getSrc()+" -> "+e.getDest());
-				
+
 				reversedG.connect(e.getDest(), e.getSrc(), e.getWeight());
 			}
 		}
-		
-		
 	}
-	
-
 }

@@ -57,7 +57,7 @@ public class Graph_Algo implements graph_algorithms{
 	public void save(String file_name) {
 		 		
 		try
-	        {    
+	        {
 	            FileOutputStream file = new FileOutputStream(file_name); 
 	            ObjectOutputStream out = new ObjectOutputStream(file); 
 	              
@@ -69,10 +69,9 @@ public class Graph_Algo implements graph_algorithms{
 	            System.out.println("Object has been serialized"); 
 	        }   
 	        catch(IOException ex) 
-	        { 
+	        {
 	            System.out.println("IOException is caught"); 
-	        } 
-		
+	        }
 	}
 
 	@Override

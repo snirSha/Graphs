@@ -107,8 +107,6 @@ public class Graph_GUI {
 		
 	}
 
-
-
 	public static void main (String [] args) {
 		Graph_GUI gg = new Graph_GUI();
 		Point3D p1=new Point3D(0,0);
@@ -143,25 +141,27 @@ public class Graph_GUI {
 
 
 		gg.g.connect(a.getKey(),b.getKey(),4);
-		gg.g.connect(a.getKey(),c.getKey(), 2);
-		gg.g.connect(a.getKey(),d.getKey(),4);
-		gg.g.connect(a.getKey(),e.getKey(), 2);
-		gg.g.connect(a.getKey(),f.getKey(),4);
-		gg.g.connect(a.getKey(),j.getKey(), 2);
-		gg.g.connect(a.getKey(),h.getKey(),4);
-		gg.g.connect(a.getKey(),i.getKey(), 2);
+		gg.g.connect(b.getKey(),c.getKey(), 2);
+		gg.g.connect(c.getKey(),d.getKey(),4);
+		gg.g.connect(d.getKey(),e.getKey(), 2);
+		gg.g.connect(e.getKey(),f.getKey(),4);
+		gg.g.connect(f.getKey(),j.getKey(), 2);
+		gg.g.connect(j.getKey(),h.getKey(),4);
+		gg.g.connect(h.getKey(),i.getKey(), 2);
 		
 		/*
 		 * check remove
-		 */
-		//gg.g.removeEdge(0, 1);
-		//gg.g.removeEdge(1, 2);
-		//gg.g.removeNode(1);
-		//gg.g.removeNode(9);
-		//gg.g.removeNode(0);
+		 
+		gg.g.removeEdge(0, 1);
 		
+		gg.g.removeNode(1);
+		gg.g.removeNode(8);
+		//gg.g.removeNode(0);
+		 * */
+		
+		gg.g.removeEdge(1, 2);
 		//StdDraw.clear();
-		//gg.g.reversedGraph1();
+		gg.g.reversedGraph1();
 		gg.drawDGraph();
 		
 	}
