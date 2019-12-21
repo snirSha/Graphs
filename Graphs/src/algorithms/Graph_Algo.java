@@ -7,9 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import dataStructure.DGraph;
+import dataStructure.Edge;
+import dataStructure.Node;
+import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 /**
@@ -73,8 +77,43 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
+		zeroTags();
+		boolean a=DFS(0);
+		if(!a)
+			return a;
+		reversedGraph();
+		zeroTags();
+		return DFS(0);
+	}
+	
+	//helper function1 - start at node 0 and find all his neighbors and their neighbors and so on
+	private boolean DFS(int i) {
+		Collection<node_data> n=g.getV();
+		for(node_data a:n) {
+			
+		}
+		
 		return false;
+	}
+	//helper function2 - copy all nodes and then connect the edges backwards
+	private void reversedGraph() {
+		DGraph reversedGraph=new DGraph();
+		Collection<node_data> n=g.getV();
+		for(node_data a:n) {
+			reversedGraph.addNode(a);
+			Collection<edge_data> tmp=g.getE(a.getKey());
+			for(edge_data e:tmp) {
+				reversedGraph.connect(e.getDest(), e.getSrc(), e.getWeight());
+			}
+		}
+		g=reversedGraph;
+	}
+	//helper function3 - zeroing all tags in all the nodes 
+	private void zeroTags() {
+		Collection<node_data> n=g.getV();
+		for(node_data a: n) {
+			a.setTag(0);
+		}		
 	}
 
 	@Override
