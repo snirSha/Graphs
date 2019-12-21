@@ -3,26 +3,16 @@ package gui;
 import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.node_data;
-
 import java.awt.Color;
 import java.util.Collection;
-
-//import java.util.ArrayList;
-
 import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
 
 public class Graph_GUI {
 	DGraph g = new DGraph();
-	//	ArrayList<Node> nodes=new ArrayList<>();
 
-	public Graph_GUI() {
-		StdDraw.setCanvasSize(1000, 1000);
-		StdDraw.setXscale(-100,100);
-		StdDraw.setYscale(-100,100);
-
-	}
+	
 
 	public void addNode(Node a) {
 		g.addNode(a);
@@ -52,11 +42,9 @@ public class Graph_GUI {
 			double Dx=g.getNode(edges.getDest()).getLocation().x();
 			double Dy=g.getNode(edges.getDest()).getLocation().y();
 
-//			g.addNode(src);
-//			g.addNode(dest);
 
 			StdDraw.setPenRadius(0.005);
-			StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in black
+			StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
 			StdDraw.line(Sx,Sy,Dx,Dy);
 
 
@@ -107,10 +95,18 @@ public class Graph_GUI {
 	}
 
 	public void drawDGraph() {
+		StdDraw.setCanvasSize(1000, 1000);
+		StdDraw.setXscale(-100,100);
+		StdDraw.setYscale(-100,100);
 		printEdges();
 		printNodes();
 
 	}
+	public void deleteGraph() {
+		StdDraw.clear();
+		
+	}
+
 
 
 	public static void main (String [] args) {
@@ -131,30 +127,43 @@ public class Graph_GUI {
 		Node d=new Node(p4, 0, "dai", 0);	
 		Node e=new Node(p5, 0, "dai", 0);
 		Node f=new Node(p6, 0, "dai", 0);
-		Node g=new Node(p7, 0, "dai", 0);
+		Node j=new Node(p7, 0, "dai", 0);
 		Node h=new Node(p8, 0, "dai", 0);
 		Node i=new Node(p9, 0, "dai", 0);
 
-		gg.addNode(a);
-		gg.addNode(b);
-		gg.addNode(c);
-		gg.addNode(d);
-		gg.addNode(e);
-		gg.addNode(f);
-		gg.addNode(g);
-		gg.addNode(h);
-		gg.addNode(i);
+		gg.g.addNode(a);
+		gg.g.addNode(b);
+		gg.g.addNode(c);
+		gg.g.addNode(d);
+		gg.g.addNode(e);
+		gg.g.addNode(f);
+		gg.g.addNode(j);
+		gg.g.addNode(h);
+		gg.g.addNode(i);
+
 
 		gg.g.connect(a.getKey(),b.getKey(),4);
 		gg.g.connect(a.getKey(),c.getKey(), 2);
 		gg.g.connect(a.getKey(),d.getKey(),4);
 		gg.g.connect(a.getKey(),e.getKey(), 2);
 		gg.g.connect(a.getKey(),f.getKey(),4);
-		gg.g.connect(a.getKey(),g.getKey(), 2);
+		gg.g.connect(a.getKey(),j.getKey(), 2);
 		gg.g.connect(a.getKey(),h.getKey(),4);
 		gg.g.connect(a.getKey(),i.getKey(), 2);
 		
+		/*
+		 * check remove
+		 */
+		//gg.g.removeEdge(0, 1);
+		//gg.g.removeEdge(1, 2);
+		//gg.g.removeNode(1);
+		//gg.g.removeNode(9);
+		//gg.g.removeNode(0);
+		
+		//StdDraw.clear();
+		//gg.g.reversedGraph1();
 		gg.drawDGraph();
+		
 	}
 }
 

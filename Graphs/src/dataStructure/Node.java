@@ -33,17 +33,18 @@ public class Node implements node_data{
 		this._tag=t;
 	}
 	
-	public Node(Node other) {
-		this._data=other._data;
-		this._p=other._p;
-		this._weight=other._weight;
-		this._tag=other._tag;
-		this._info=other._info;
-	}
+//	public Node(Node other) {
+//		this._data=other._data;
+//		this._p=other._p;
+//		this._weight=other._weight;
+//		this._tag=other._tag;
+//		this._info=other._info;
+//	}
 	
 	public void addEdge(Edge e) {
-		if(this.getKey()==e.getSrc())
+		if(this.getKey()==e.getSrc()) {
 			edgesOf.put(e.getDest(), e);
+		}
 		else
 			System.out.println("Wrong value!!!");
 	}

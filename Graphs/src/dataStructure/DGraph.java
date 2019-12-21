@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import gui.Graph_GUI;
+import utils.StdDraw;
+
 
 public class DGraph implements graph{
 
-	private HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
+	private static HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
 	private int counterEdges=0;
 	private int changes=0;//every change in the graph the counter goes up by one
 
@@ -27,13 +30,16 @@ public class DGraph implements graph{
 	}
 
 	public void connect(int src, int dest, double w) {
-		changes++;//adding an edge
-		counterEdges++;
 		try{
+			
 			Node s=(Node) nodes.get(src);
-			Node d=(Node) nodes.get(dest);
-			Edge e=new Edge(s,d,w);
+			Edge e=new Edge(src,dest,w);
+			
 			s.addEdge(e);
+
+			changes++;//adding an edge
+			counterEdges++;
+
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -107,6 +113,23 @@ public class DGraph implements graph{
 		return changes;
 	}
 	
+	public void reversedGraph1() {
+		StdDraw.clear();
+
+		DGraph reversedG=new DGraph();
+		Collection<node_data> n=this.getV();
+		for(node_data a:n) {
+			reversedG.addNode(a);
+			Collection<edge_data> tmp=this.getE(a.getKey());
+			for(edge_data e:tmp) {
+				System.out.println(e.getSrc()+" -> "+e.getDest());
+				
+				reversedG.connect(e.getDest(), e.getSrc(), e.getWeight());
+			}
+		}
+		
+		
+	}
 	
 
 }

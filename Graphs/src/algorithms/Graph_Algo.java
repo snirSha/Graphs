@@ -97,16 +97,16 @@ public class Graph_Algo implements graph_algorithms{
 	}
 	//helper function2 - copy all nodes and then connect the edges backwards
 	private void reversedGraph() {
-		DGraph reversedGraph=new DGraph();
+		DGraph reversedG=new DGraph();
 		Collection<node_data> n=g.getV();
 		for(node_data a:n) {
-			reversedGraph.addNode(a);
+			reversedG.addNode(a);
 			Collection<edge_data> tmp=g.getE(a.getKey());
 			for(edge_data e:tmp) {
-				reversedGraph.connect(e.getDest(), e.getSrc(), e.getWeight());
+				reversedG.connect(e.getDest(), e.getSrc(), e.getWeight());
 			}
 		}
-		g=reversedGraph;
+		g=reversedG;
 	}
 	//helper function3 - zeroing all tags in all the nodes 
 	private void zeroTags() {
