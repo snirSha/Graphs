@@ -25,6 +25,7 @@ import dataStructure.node_data;
 public class Graph_Algo implements graph_algorithms{
 	public graph g;
 
+
 	@Override
 	public void init(graph g) {
 		this.g = g;		
@@ -33,62 +34,79 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public void init(String file_name) {
 		try
-        {    
-            FileInputStream file = new FileInputStream(file_name); 
-            ObjectInputStream in = new ObjectInputStream(file);
-            g = (DGraph)in.readObject(); 
-            in.close(); 
-            file.close(); 
-            System.out.println("Object has been deserialized");
-        } 
-          
-        catch(IOException | ClassNotFoundException ex) 
-        { 
-            System.out.println("IOException is caught"); 
-        } 
+		{    
+			FileInputStream file = new FileInputStream(file_name); 
+			ObjectInputStream in = new ObjectInputStream(file);
+			g = (DGraph)in.readObject(); 
+			in.close(); 
+			file.close(); 
+			System.out.println("Object has been deserialized");
+		} 
+
+		catch(IOException | ClassNotFoundException ex) 
+		{ 
+			System.out.println("IOException is caught"); 
+		} 
 	}
 
 	@Override
 	public void save(String file_name) {	
 		try
-	        {
-	            FileOutputStream file = new FileOutputStream(file_name); 
-	            ObjectOutputStream out = new ObjectOutputStream(file);
-	            out.writeObject(g);
-	            out.close(); 
-	            file.close(); 
-	              
-	            System.out.println("Object has been serialized"); 
-	        }   
-	        catch(IOException ex) 
-	        {
-	            System.out.println("IOException is caught"); 
-	        }
+		{
+			FileOutputStream file = new FileOutputStream(file_name); 
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			out.writeObject(g);
+			out.close(); 
+			file.close(); 
+
+			System.out.println("Object has been serialized"); 
+		}   
+		catch(IOException ex) 
+		{
+			System.out.println("IOException is caught"); 
+		}
 	}
 
 	@Override
 	public boolean isConnected() {
-		zeroTags();
-		boolean a=DFS(0);
-		if(!a)
-			return a;
-		((DGraph) g).reversedGraph();
-		zeroTags();
-		return DFS(0);
-	}
-	
-	//helper function1 - start at node 0 and find all his neighbors and their neighbors and so on
-	private boolean DFS(int i) {
-		Collection<node_data> n=g.getV();
-		for(node_data a:n) {
-			
+		if(g.nodeSize()==0)
+			return true;
+		else {
+			zeroTags();//zero all the tags
+			DFS(0,g.nodeSize());//start at node zero and change tags to 1 in every node it's been through
+			boolean ans=checkAllTags();//check if all tags are 1
+			if(!ans)//if not it is not connected
+				return ans;
+			zeroTags();//again zero all tags
+			((DGraph) g).reversedGraph();
+			DFS(0,g.nodeSize());
+			return checkAllTags();
 		}
-		
-		return false;
 	}
-	
 
-	//helper function3 - zeroing all tags in all the nodes 
+	private boolean checkAllTags() {//the 4'th helper, check if all tags are 1
+		Collection<node_data> nod=g.getV();
+		for(node_data a:nod) {
+			if(a.getTag()!=1)
+				return false;
+		}
+		return true;
+	}
+
+	//helper function 2 - start at node 0 and find all his neighbors and their neighbors and so on
+	private void DFS(int i,int counter) {
+		if(g.getNode(i)==null || counter==0)
+			return;
+		g.getNode(i).setTag(1);
+		counter--;
+		System.out.println(i);
+		Collection<edge_data> edgesOf = g.getE(i);
+		for(edge_data e:edgesOf) 
+			DFS(e.getDest(),counter);			
+	}
+
+
+	//helper function 1 - zeroing all tags in all the nodes 
 	private void zeroTags() {
 		Collection<node_data> n=g.getV();
 		for(node_data a: n) {
@@ -98,7 +116,7 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		
+
 		return 0;
 	}
 

@@ -165,15 +165,15 @@ public class Graph_GUI {
 		Node h=new Node(p8, 0, "dai", 0);
 		Node i=new Node(p9, 0, "dai", 0);
 
-		gg.g.addNode(a);
-		gg.g.addNode(b);
-		gg.g.addNode(c);
-		gg.g.addNode(d);
-		gg.g.addNode(e);
-		gg.g.addNode(f);
-		gg.g.addNode(j);
-		gg.g.addNode(h);
-		gg.g.addNode(i);
+		gg.addNode(a);
+		gg.addNode(b);
+		gg.addNode(c);
+		gg.addNode(d);
+		gg.addNode(e);
+		gg.addNode(f);
+		gg.addNode(j);
+		gg.addNode(h);
+		gg.addNode(i);
 
 
 		gg.g.connect(a.getKey(),b.getKey(),4);
@@ -184,7 +184,8 @@ public class Graph_GUI {
 		gg.g.connect(f.getKey(),j.getKey(), 2);
 		gg.g.connect(j.getKey(),h.getKey(),4);
 		gg.g.connect(h.getKey(),i.getKey(), 2);
-
+		gg.g.connect(i.getKey(),a.getKey(), 5);//we closed the graph here
+		
 		/*
 		 * check remove
 
@@ -208,9 +209,12 @@ public class Graph_GUI {
 		ga.init(gg.g);
 		Graph_GUI gg2 = new Graph_GUI();
 		gg2.g = (DGraph) ga.copy();
-		gg2.reversedGraph();
+		System.out.println(ga.isConnected());
+		
+		//gg2.reversedGraph();
 		gg2.drawDGraph();
-
+		
+	
 	}
 }
 
