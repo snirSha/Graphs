@@ -177,14 +177,14 @@ public class Graph_GUI {
 
 
 		gg.g.connect(a.getKey(),b.getKey(),4);
-		gg.g.connect(b.getKey(),c.getKey(), 2);
-		gg.g.connect(c.getKey(),d.getKey(),4);
-		gg.g.connect(d.getKey(),e.getKey(), 2);
-		gg.g.connect(e.getKey(),f.getKey(),4);
+		gg.g.connect(b.getKey(),c.getKey(), 6);
+		gg.g.connect(c.getKey(),d.getKey(),7);
+		gg.g.connect(d.getKey(),e.getKey(), 9);
+		gg.g.connect(e.getKey(),f.getKey(),1);
 		gg.g.connect(f.getKey(),j.getKey(), 2);
-		gg.g.connect(j.getKey(),h.getKey(),4);
-		gg.g.connect(h.getKey(),i.getKey(), 2);
-		gg.g.connect(i.getKey(),a.getKey(), 5);//we closed the graph here
+		gg.g.connect(j.getKey(),h.getKey(),0);
+		gg.g.connect(h.getKey(),i.getKey(), 8);
+		gg.g.connect(i.getKey(),a.getKey(), 3);//we closed the graph here
 		
 		/*
 		 * check remove
