@@ -5,6 +5,8 @@ import dataStructure.edge_data;
 import dataStructure.node_data;
 import java.awt.Color;
 import java.util.Collection;
+
+import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
@@ -12,14 +14,11 @@ import utils.StdDraw;
 public class Graph_GUI {
 	DGraph g = new DGraph();
 
-	
-
 	public void addNode(Node a) {
 		g.addNode(a);
 	}
 	
-
-	public void printNodes() {
+	public void drawNodes() {
 		Collection<node_data> n=g.getV();
 		for (node_data a:n) {
 			double x=a.getLocation().x();
@@ -32,28 +31,27 @@ public class Graph_GUI {
 			StdDraw.text(x,y,abs);
 		}
 	}
-	public void printEdges() {
+	
+	public void drawEdges() {
 		Collection<node_data> allNodes=g.getV();
 		for(node_data n:allNodes) {
 			Collection<edge_data> allEdgesOfNode=g.getE(n.getKey());
 			for(edge_data edges:allEdgesOfNode) {
-			double Sx=g.getNode(edges.getSrc()).getLocation().x();
-			double Sy=g.getNode(edges.getSrc()).getLocation().y();
-			double Dx=g.getNode(edges.getDest()).getLocation().x();
-			double Dy=g.getNode(edges.getDest()).getLocation().y();
-
+			double Sx = g.getNode(edges.getSrc()).getLocation().x();
+			double Sy = g.getNode(edges.getSrc()).getLocation().y();
+			double Dx = g.getNode(edges.getDest()).getLocation().x();
+			double Dy = g.getNode(edges.getDest()).getLocation().y();
 
 			StdDraw.setPenRadius(0.005);
 			StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
 			StdDraw.line(Sx,Sy,Dx,Dy);
 
-
-			Point3D arrow=getArrow(Sx,Sy,Dx,Dy);//paint the arrow in red
+			Point3D arrow = getArrow(Sx,Sy,Dx,Dy);//paint the arrow in red
 			StdDraw.setPenRadius(0.02);
 			StdDraw.setPenColor(StdDraw.RED);
 			StdDraw.point(arrow.x(),arrow.y());
 
-			String te=edges.getWeight()+"";
+			String te = edges.getWeight()+"";
 
 			StdDraw.setPenRadius(0.1);
 			StdDraw.setPenColor(Color.BLACK);
@@ -67,6 +65,7 @@ public class Graph_GUI {
 			return (y1-y2)/(x1-x2);
 		return Integer.MAX_VALUE;
 	}
+	
 	private Point3D getArrow(double Sx,double Sy,double Dx,double Dy) {
 		double newX,newY;
 		double m=getIncline(Sx,Sy,Dx,Dy);
@@ -97,13 +96,24 @@ public class Graph_GUI {
 		ans=new Point3D(newX,newY);	
 		return ans;
 	}
+	
+	public void removeNode(int x) {
+		g.removeNode(x);
+	}
+	public void removeEdge(int x,int y) {
+		g.removeEdge(x,y);
+	}
+	
+	public void reversedGraph() {
+		g.reversedGraph();
+	}
 
 	public void drawDGraph() {
 		StdDraw.setCanvasSize(1000, 1000);
 		StdDraw.setXscale(-100,100);
 		StdDraw.setYscale(-100,100);
-		printEdges();
-		printNodes();
+		drawEdges();
+		drawNodes();
 
 	}
 	public void deleteGraph() {
@@ -156,22 +166,25 @@ public class Graph_GUI {
 		/*
 		 * check remove
 		 
-		gg.g.removeEdge(0, 1);
+		gg.removeEdge(0, 1);
 		
-		gg.g.removeNode(1);
-		gg.g.removeNode(8);
-		//gg.g.removeNode(0);
+		gg.removeNode(1);
+		gg.removeNode(8);
+//		gg.removeNode(0);
 //		 * */
 //		System.out.println(gg.g.nodeSize());
 //		System.out.println(gg.g.edgeSize());
-//		gg.g.removeNode(0);
+//		gg.removeNode(0);
 //		System.out.println(gg.g.edgeSize());
 //		System.out.println(gg.g.nodeSize());
-		System.out.println(gg.g.edgeSize());
-		//gg.g.removeEdge(0, 2);
+//		System.out.println(gg.g.edgeSize());
+		//gg.removeEdge(0, 2);
 		//System.out.println(gg.g.edgeSize());
 		//StdDraw.clear();
-		gg.g.reversedGraph();
+		//gg.reversedGraph();
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(gg.g);
+		ga.save("test.txt");
 		gg.drawDGraph();
 		
 	}

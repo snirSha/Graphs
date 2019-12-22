@@ -1,5 +1,6 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import gui.Graph_GUI;
 import utils.StdDraw;
 
 
-public class DGraph implements graph{
+public class DGraph implements Serializable, graph {
 
 	private static HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
 	private int counterEdges=0;
@@ -20,7 +21,7 @@ public class DGraph implements graph{
 		return nodes.get(key);
 	}
 
-	public edge_data getEdge(int src, int dest) {//????????????
+	public edge_data getEdge(int src, int dest) {
 		Node s=(Node) nodes.get(src);
 		return s.getEdgesOf().get(dest);
 	}
@@ -46,7 +47,7 @@ public class DGraph implements graph{
 				s.addEdge(e);
 				changes++;//adding an edge
 				counterEdges++;
-				System.out.println(src + " -> " + dest);
+				//System.out.println(src + " -> " + dest);
 			}
 		}
 		else {
@@ -137,7 +138,7 @@ public class DGraph implements graph{
 	}
 
 	public void reversedGraph() {
-		int count = 0;
+//		int count = 0;
 		for(node_data a: nodes.values()) {
 			Node n = (Node)a;
 			for(Object e: n._edges.values().toArray()) {
@@ -147,25 +148,11 @@ public class DGraph implements graph{
 					connect(ed.getDest(), ed.getSrc(), ed.getWeight());
 					Edge ed1 = (Edge)getEdge(ed.getDest(), ed.getSrc());
 					ed1.setTag(1);
-					removeEdge(ed.getSrc(), ed.getDest());
-					
-					count++;
-					System.out.println(count);
+					removeEdge(ed.getSrc(), ed.getDest());					
+//					count++;
+//					System.out.println(count);
 				}
 			}
 		}
-
-//		DGraph reversedG=new DGraph();
-//		Collection<node_data> n=this.getV();
-//		for(node_data a:n) {
-//			reversedG.addNode(a);
-//			Collection<edge_data> tmp=this.getE(a.getKey());
-//			for(edge_data e:tmp) {
-//				System.out.println(e.getSrc()+" -> "+e.getDest());
-//
-//				reversedG.connect(e.getDest(), e.getSrc(), e.getWeight());
-//				
-//			}
-//		}
 	}
 }
