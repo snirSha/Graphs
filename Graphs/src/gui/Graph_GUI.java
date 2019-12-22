@@ -2,18 +2,31 @@ package gui;
 
 import dataStructure.Node;
 import dataStructure.edge_data;
+import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
 import java.util.Collection;
 
 import algorithms.Graph_Algo;
+import algorithms.graph_algorithms;
 import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
 
 public class Graph_GUI {
-	DGraph g = new DGraph();
-
+	Graph_Algo ga;
+	DGraph g;
+	
+	public Graph_GUI() {
+		ga = new Graph_Algo();
+		g = new DGraph();
+	}
+	
+	public Graph_GUI(graph g) {
+		this.g = (DGraph) g;
+		ga.init(g);
+	}
+	
 	public void addNode(Node a) {
 		g.addNode(a);
 	}
@@ -121,7 +134,7 @@ public class Graph_GUI {
 	}
 
 	public void reversedGraph() {
-		g.reversedGraph();
+		((DGraph) g).reversedGraph();
 	}
 
 	public void drawDGraph() {
@@ -145,15 +158,16 @@ public class Graph_GUI {
 
 	public static void main (String [] args) {
 		Graph_GUI gg = new Graph_GUI();
-		Point3D p1=new Point3D(0,0);
+		Point3D p1=new Point3D(-50,50);
 		Point3D p2=new Point3D(50,50);
-		Point3D p3=new Point3D(-50,-50);
-		Point3D p4=new Point3D(-50,50);
-		Point3D p5=new Point3D(50,-50);
-		Point3D p6=new Point3D(0,50);
-		Point3D p7=new Point3D(50,0);
-		Point3D p8=new Point3D(0,-50);
-		Point3D p9=new Point3D(-50,0);
+		Point3D p3=new Point3D(-50,40);
+		Point3D p4=new Point3D(50,40);
+		Point3D p5=new Point3D(-50,30);
+		Point3D p6=new Point3D(50,30);
+		Point3D p7=new Point3D(-50,20);
+		Point3D p8=new Point3D(50,20);
+		Point3D p9=new Point3D(-50,10);
+		Point3D p10=new Point3D(0,-20);
 
 		Node a=new Node(p1, 0, "dai", 0);
 		Node b=new Node(p2, 0, "dai", 0);
@@ -164,7 +178,8 @@ public class Graph_GUI {
 		Node j=new Node(p7, 0, "dai", 0);
 		Node h=new Node(p8, 0, "dai", 0);
 		Node i=new Node(p9, 0, "dai", 0);
-
+		Node k=new Node(p10, 0,"", 0);
+		
 		gg.addNode(a);
 		gg.addNode(b);
 		gg.addNode(c);
@@ -174,6 +189,7 @@ public class Graph_GUI {
 		gg.addNode(j);
 		gg.addNode(h);
 		gg.addNode(i);
+		gg.addNode(k);
 
 
 		gg.g.connect(a.getKey(),b.getKey(),4);
@@ -184,7 +200,10 @@ public class Graph_GUI {
 		gg.g.connect(f.getKey(),j.getKey(), 2);
 		gg.g.connect(j.getKey(),h.getKey(),0);
 		gg.g.connect(h.getKey(),i.getKey(), 8);
-		gg.g.connect(i.getKey(),a.getKey(), 3);//we closed the graph here
+		gg.g.connect(k.getKey(), b.getKey(), 3);
+		gg.g.connect(k.getKey(), a.getKey(), 3);
+		gg.g.connect(d.getKey(),k.getKey(), 9);
+	//	gg.g.connect(i.getKey(),a.getKey(), 3);//we closed the graph here
 		
 		/*
 		 * check remove
@@ -207,11 +226,13 @@ public class Graph_GUI {
 		//gg.reversedGraph();
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(gg.g);
+		
+		
+		
 		Graph_GUI gg2 = new Graph_GUI();
 		gg2.g = (DGraph) ga.copy();
 		System.out.println(ga.isConnected());
-		
-		//gg2.reversedGraph();
+		gg2.g = (DGraph) ga.copy();
 		gg2.drawDGraph();
 		
 	

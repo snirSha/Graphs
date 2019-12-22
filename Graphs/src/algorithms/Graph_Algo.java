@@ -69,28 +69,28 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public boolean isConnected() {
+		boolean ans=isConnectedHelper();
+		zeroTags();
+		((DGraph) g).reversedGraph();
+		return ans;
+	}
+	public boolean isConnectedHelper() {
 		if(g.nodeSize()==0)
 			return true;
 		else {
 			zeroTags();//zero all the tags
-			DFS(getFirstNode(),g.nodeSize());//start at node zero and change tags to 1 in every node it's been through
+			DFS(0,g.nodeSize());//start at node zero and change tags to 1 in every node it's been through
 			boolean ans=checkAllTags();//check if all tags are 1
 			if(!ans)//if not it is not connected
 				return ans;
 			zeroTags();//again zero all tags
 			((DGraph) g).reversedGraph();
-			DFS(getFirstNode(),g.nodeSize());
+			DFS(0,g.nodeSize());
 			return checkAllTags();
 		}
 	}
-	private int getFirstNode() {//the 5'th helper of isConnected, return first Node key
-		Collection<node_data> n=g.getV();
-		for(node_data t:n)
-			return t.getKey();
-		return 0;
-	}
 
-	private boolean checkAllTags() {//the 4'th helper of isConnected, check if all tags are 1
+	private boolean checkAllTags() {//the 4'th helper, check if all tags are 1
 		Collection<node_data> nod=g.getV();
 		for(node_data a:nod) {
 			if(a.getTag()!=1)
@@ -99,21 +99,21 @@ public class Graph_Algo implements graph_algorithms{
 		return true;
 	}
 
-	//helper function 2 to isConnected- start at node 0 and find all his neighbors and their neighbors and so on
+	//helper function 2 - start at node 0 and find all his neighbors and their neighbors and so on
 	private void DFS(int i,int counter) {
 		if(g.getNode(i)==null || counter==0)
 			return;
 		g.getNode(i).setTag(1);
 		counter--;
-		//System.out.println(i);
 		Collection<edge_data> edgesOf = g.getE(i);
 		for(edge_data e:edgesOf) 
 			DFS(e.getDest(),counter);			
 	}
 
 
-	//helper function 1 to isConnected- zeroing all tags in all the nodes 
+	//helper function 1 - zeroing all tags in all the nodes 
 	private void zeroTags() {
+		System.out.println("In zeroTags func");
 		Collection<node_data> n=g.getV();
 		for(node_data a: n) {
 			a.setTag(0);
@@ -122,25 +122,8 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-//		maxValueWeight();
-//		Node n=(Node) g.getNode(src);
-//		double min=Double.MAX_VALUE;
-//	
-//		Collection<edge_data> edgesOf=g.getE(src);
-//		for(edge_data e: edgesOf) {
-//			if(min>e.getWeight()) {
-//				e.setTag(1);
-//				min=e.getWeight();
-//				Node des=(Node)g.getNode(e.getDest());
-//			}
-//		}
+		
 		return 0;
-	}
-	
-	private void maxValueWeight() {//helper function to shortestPathDist
-		Collection<node_data> nodes=g.getV();
-		for(node_data a: nodes)
-			a.setWeight(Double.MAX_VALUE);
 	}
 
 	@Override

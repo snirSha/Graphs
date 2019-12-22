@@ -12,7 +12,7 @@ import utils.StdDraw;
 
 public class DGraph implements Serializable, graph {
 
-	private static HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
+	public static HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
 	private int counterEdges=0;
 	private int changes=0;//every change in the graph the counter goes up by one
 
@@ -138,7 +138,7 @@ public class DGraph implements Serializable, graph {
 	}
 
 	public void reversedGraph() {
-//		int count = 0;
+		zeroEdgeTag();
 		for(node_data a: nodes.values()) {
 			Node n = (Node)a;
 			for(Object e: n._edges.values().toArray()) {
@@ -148,11 +148,20 @@ public class DGraph implements Serializable, graph {
 					connect(ed.getDest(), ed.getSrc(), ed.getWeight());
 					Edge ed1 = (Edge)getEdge(ed.getDest(), ed.getSrc());
 					ed1.setTag(1);
-					removeEdge(ed.getSrc(), ed.getDest());					
-//					count++;
-//					System.out.println(count);
+					removeEdge(ed.getSrc(), ed.getDest());
 				}
 			}
 		}
 	}
+	private void zeroEdgeTag() {
+		Collection<node_data> nod = nodes.values();
+		for(node_data a:nod) {
+			Node n = (Node)a;
+			Collection<Edge> e = n._edges.values();
+			for(edge_data ed: e) {
+				ed.setTag(0);
+			}
+		}
+	}
+
 }
