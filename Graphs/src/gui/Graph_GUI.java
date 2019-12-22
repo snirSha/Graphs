@@ -17,47 +17,63 @@ public class Graph_GUI {
 	public void addNode(Node a) {
 		g.addNode(a);
 	}
-	
+
 	public void drawNodes() {
-		Collection<node_data> n=g.getV();
-		for (node_data a:n) {
-			double x=a.getLocation().x();
-			double y=a.getLocation().y();
-			StdDraw.setPenRadius(0.05);
-			StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
-			StdDraw.point(x,y);
-			StdDraw.setPenColor(StdDraw.BLACK);
-			String abs=a.getKey()+"";
-			StdDraw.text(x,y,abs);
-		}
-	}
-	
-	public void drawEdges() {
-		Collection<node_data> allNodes=g.getV();
-		for(node_data n:allNodes) {
-			Collection<edge_data> allEdgesOfNode=g.getE(n.getKey());
-			for(edge_data edges:allEdgesOfNode) {
-			double Sx = g.getNode(edges.getSrc()).getLocation().x();
-			double Sy = g.getNode(edges.getSrc()).getLocation().y();
-			double Dx = g.getNode(edges.getDest()).getLocation().x();
-			double Dy = g.getNode(edges.getDest()).getLocation().y();
 
-			StdDraw.setPenRadius(0.005);
-			StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
-			StdDraw.line(Sx,Sy,Dx,Dy);
-
-			Point3D arrow = getArrow(Sx,Sy,Dx,Dy);//paint the arrow in red
-			StdDraw.setPenRadius(0.02);
-			StdDraw.setPenColor(StdDraw.RED);
-			StdDraw.point(arrow.x(),arrow.y());
-
-			String te = edges.getWeight()+"";
-
-			StdDraw.setPenRadius(0.1);
-			StdDraw.setPenColor(Color.BLACK);
-			StdDraw.text((Sx+Dx)/2, (Sy+Dy)/2, te);
+		try {
+			Collection<node_data> n=g.getV();
+			for (node_data a:n) {
+				double x=a.getLocation().x();
+				double y=a.getLocation().y();
+				StdDraw.setPenRadius(0.05);
+				StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
+				StdDraw.point(x,y);
+				StdDraw.setPenColor(StdDraw.BLACK);
+				String abs=a.getKey()+"";
+				StdDraw.text(x,y,abs);
 			}
+		}catch(Exception e) {
+			System.out.println("No nodes to draw");
 		}
+
+	}
+
+	public void drawEdges() {
+
+		try {
+
+			Collection<node_data> allNodes=g.getV();
+			if(allNodes != null) {
+				for(node_data n:allNodes) {
+					Collection<edge_data> allEdgesOfNode=g.getE(n.getKey());
+					for(edge_data edges:allEdgesOfNode) {
+						double Sx = g.getNode(edges.getSrc()).getLocation().x();
+						double Sy = g.getNode(edges.getSrc()).getLocation().y();
+						double Dx = g.getNode(edges.getDest()).getLocation().x();
+						double Dy = g.getNode(edges.getDest()).getLocation().y();
+
+						StdDraw.setPenRadius(0.005);
+						StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
+						StdDraw.line(Sx,Sy,Dx,Dy);
+
+						Point3D arrow = getArrow(Sx,Sy,Dx,Dy);//paint the arrow in red
+						StdDraw.setPenRadius(0.02);
+						StdDraw.setPenColor(StdDraw.RED);
+						StdDraw.point(arrow.x(),arrow.y());
+
+						String te = edges.getWeight()+"";
+
+						StdDraw.setPenRadius(0.1);
+						StdDraw.setPenColor(Color.BLACK);
+						StdDraw.text((Sx+Dx)/2, (Sy+Dy)/2, te);
+					}
+				}
+			}
+
+		}catch(Exception e) {
+			System.out.println("No edges to Draw");
+		}
+
 	}
 
 	private double getIncline(double x1,double y1,double x2,double y2) {
@@ -65,7 +81,7 @@ public class Graph_GUI {
 			return (y1-y2)/(x1-x2);
 		return Integer.MAX_VALUE;
 	}
-	
+
 	private Point3D getArrow(double Sx,double Sy,double Dx,double Dy) {
 		double newX,newY;
 		double m=getIncline(Sx,Sy,Dx,Dy);
@@ -96,29 +112,35 @@ public class Graph_GUI {
 		ans=new Point3D(newX,newY);	
 		return ans;
 	}
-	
+
 	public void removeNode(int x) {
 		g.removeNode(x);
 	}
 	public void removeEdge(int x,int y) {
 		g.removeEdge(x,y);
 	}
-	
+
 	public void reversedGraph() {
 		g.reversedGraph();
 	}
 
 	public void drawDGraph() {
-		StdDraw.setCanvasSize(1000, 1000);
-		StdDraw.setXscale(-100,100);
-		StdDraw.setYscale(-100,100);
-		drawEdges();
-		drawNodes();
+		try {
+			if(g.getV() != null) {
+				StdDraw.setCanvasSize(1000, 1000);
+				StdDraw.setXscale(-100,100);
+				StdDraw.setYscale(-100,100);
 
+				drawEdges();
+				drawNodes();
+			}
+		}catch(Exception e){
+			System.out.println("Nothing to draw");
+		}
 	}
 	public void deleteGraph() {
 		StdDraw.clear();
-		
+
 	}
 
 	public static void main (String [] args) {
@@ -162,31 +184,33 @@ public class Graph_GUI {
 		gg.g.connect(f.getKey(),j.getKey(), 2);
 		gg.g.connect(j.getKey(),h.getKey(),4);
 		gg.g.connect(h.getKey(),i.getKey(), 2);
-		
+
 		/*
 		 * check remove
-		 
+
 		gg.removeEdge(0, 1);
-		
+
 		gg.removeNode(1);
 		gg.removeNode(8);
 //		gg.removeNode(0);
 //		 * */
-//		System.out.println(gg.g.nodeSize());
-//		System.out.println(gg.g.edgeSize());
-//		gg.removeNode(0);
-//		System.out.println(gg.g.edgeSize());
-//		System.out.println(gg.g.nodeSize());
-//		System.out.println(gg.g.edgeSize());
+		//		System.out.println(gg.g.nodeSize());
+		//		System.out.println(gg.g.edgeSize());
+		//		gg.removeNode(0);
+		//		System.out.println(gg.g.edgeSize());
+		//		System.out.println(gg.g.nodeSize());
+		//		System.out.println(gg.g.edgeSize());
 		//gg.removeEdge(0, 2);
 		//System.out.println(gg.g.edgeSize());
 		//StdDraw.clear();
 		//gg.reversedGraph();
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(gg.g);
-		ga.save("test.txt");
-		gg.drawDGraph();
-		
+		Graph_GUI gg2 = new Graph_GUI();
+		gg2.g = (DGraph) ga.copy();
+		gg2.reversedGraph();
+		gg2.drawDGraph();
+
 	}
 }
 

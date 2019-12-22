@@ -23,11 +23,11 @@ import dataStructure.node_data;
  *
  */
 public class Graph_Algo implements graph_algorithms{
-	DGraph g;
+	public graph g;
 
 	@Override
 	public void init(graph g) {
-		this.g = (DGraph) g;		
+		this.g = g;		
 	}
 
 	@Override
@@ -35,34 +35,26 @@ public class Graph_Algo implements graph_algorithms{
 		try
         {    
             FileInputStream file = new FileInputStream(file_name); 
-            ObjectInputStream in = new ObjectInputStream(file); 
-              
+            ObjectInputStream in = new ObjectInputStream(file);
             g = (DGraph)in.readObject(); 
-              
             in.close(); 
             file.close(); 
-              
-            System.out.println("Object has been deserialized"); 
-            System.out.println(this);
+            System.out.println("Object has been deserialized");
         } 
           
         catch(IOException | ClassNotFoundException ex) 
         { 
             System.out.println("IOException is caught"); 
         } 
-		
 	}
 
 	@Override
-	public void save(String file_name) {
-		 		
+	public void save(String file_name) {	
 		try
 	        {
 	            FileOutputStream file = new FileOutputStream(file_name); 
-	            ObjectOutputStream out = new ObjectOutputStream(file); 
-	              
-	            out.writeObject(this); 
-	              
+	            ObjectOutputStream out = new ObjectOutputStream(file);
+	            out.writeObject(g);
 	            out.close(); 
 	            file.close(); 
 	              
@@ -80,7 +72,7 @@ public class Graph_Algo implements graph_algorithms{
 		boolean a=DFS(0);
 		if(!a)
 			return a;
-		g.reversedGraph();
+		((DGraph) g).reversedGraph();
 		zeroTags();
 		return DFS(0);
 	}
@@ -124,8 +116,11 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
-		// TODO Auto-generated method stub
-		return null;
+		String filename = "copyGraph.txt";
+		save(filename);
+		Graph_Algo newG = new Graph_Algo();
+		newG.init(filename);
+		return newG.g;
 	}
 
 }
