@@ -23,11 +23,11 @@ import dataStructure.node_data;
  *
  */
 public class Graph_Algo implements graph_algorithms{
-	graph g;
+	DGraph g;
 
 	@Override
 	public void init(graph g) {
-		this.g = g;		
+		this.g = (DGraph) g;		
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class Graph_Algo implements graph_algorithms{
             FileInputStream file = new FileInputStream(file_name); 
             ObjectInputStream in = new ObjectInputStream(file); 
               
-            g = (graph)in.readObject(); 
+            g = (DGraph)in.readObject(); 
               
             in.close(); 
             file.close(); 
@@ -80,7 +80,7 @@ public class Graph_Algo implements graph_algorithms{
 		boolean a=DFS(0);
 		if(!a)
 			return a;
-		reversedGraph();
+		g.reversedGraph();
 		zeroTags();
 		return DFS(0);
 	}
@@ -94,19 +94,8 @@ public class Graph_Algo implements graph_algorithms{
 		
 		return false;
 	}
-	//helper function2 - copy all nodes and then connect the edges backwards
-	private void reversedGraph() {
-		DGraph reversedG=new DGraph();
-		Collection<node_data> n=g.getV();
-		for(node_data a:n) {
-			reversedG.addNode(a);
-			Collection<edge_data> tmp=g.getE(a.getKey());
-			for(edge_data e:tmp) {
-				reversedG.connect(e.getDest(), e.getSrc(), e.getWeight());
-			}
-		}
-		g=reversedG;
-	}
+	
+
 	//helper function3 - zeroing all tags in all the nodes 
 	private void zeroTags() {
 		Collection<node_data> n=g.getV();

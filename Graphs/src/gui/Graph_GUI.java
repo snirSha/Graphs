@@ -80,15 +80,19 @@ public class Graph_GUI {
 			newX = Dx+dif;
 			newY = m*(newX-Dx)+Dy;
 		}
-		else {
-			if(Dy<0) {
-				newX=0;
+		else {//Sx==Dx
+			if(Dy<Sy) {
+				newX=Sx;
 				newY=Dy+dif;
 			}
-			else {
-				newX=0;
+			else if(Dy>Sy){
+				newX=Sx;
 				newY=Dy-dif;
 			}			
+			else {//Dy==Sy
+				newX=Sx;
+				newY=Sy;		
+			}
 		}
 		ans=new Point3D(newX,newY);	
 		return ans;
@@ -157,11 +161,17 @@ public class Graph_GUI {
 		gg.g.removeNode(1);
 		gg.g.removeNode(8);
 		//gg.g.removeNode(0);
-		 * */
-		
-		gg.g.removeEdge(1, 2);
+//		 * */
+//		System.out.println(gg.g.nodeSize());
+//		System.out.println(gg.g.edgeSize());
+//		gg.g.removeNode(0);
+//		System.out.println(gg.g.edgeSize());
+//		System.out.println(gg.g.nodeSize());
+		System.out.println(gg.g.edgeSize());
+		//gg.g.removeEdge(0, 2);
+		//System.out.println(gg.g.edgeSize());
 		//StdDraw.clear();
-		gg.g.reversedGraph1();
+		gg.g.reversedGraph();
 		gg.drawDGraph();
 		
 	}

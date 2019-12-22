@@ -6,8 +6,8 @@ import utils.Point3D;
 
 public class Node implements node_data{
 
-	private HashMap<Integer, Edge> edgesOf= new HashMap<>(); //b.key,a->b     c.key,b->c     d.key,c->d     a.key,d->a  |  Edge.dest.key,Edge
 	private static int count = 0;
+	public HashMap<Integer, Edge> _edges = new HashMap<>(); //b.key,a->b     c.key,b->c     d.key,c->d     a.key,d->a  |  Edge.dest.key,Edge
 	private int _data;
 	private Point3D _p;
 	private double _weight;
@@ -43,10 +43,10 @@ public class Node implements node_data{
 	
 	public void addEdge(Edge e) {
 		if(this.getKey()==e.getSrc()) {
-			edgesOf.put(e.getDest(), e);
+			_edges.put(e.getDest(), e);
 		}
 		else
-			System.out.println("Wrong value!!!");
+			System.out.println("Wrong edge!!!");
 	}
 	
 	@Override
@@ -95,6 +95,6 @@ public class Node implements node_data{
 	}
 	
 	public HashMap<Integer,Edge> getEdgesOf(){
-		return edgesOf;
+		return _edges;
 	}
 }
