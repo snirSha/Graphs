@@ -113,7 +113,6 @@ public class Graph_Algo implements graph_algorithms{
 
 	//helper function 1 - zeroing all tags in all the nodes 
 	private void zeroTags() {
-		System.out.println("In zeroTags func");
 		Collection<node_data> n=g.getV();
 		for(node_data a: n) {
 			a.setTag(0);
