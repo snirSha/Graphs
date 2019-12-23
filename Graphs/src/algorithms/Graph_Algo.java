@@ -125,6 +125,11 @@ public class Graph_Algo implements graph_algorithms{
 		return 0;
 	}
 
+	private void maxValueWeight() {//helper function to shortestPathDist
+		Collection<node_data> nodes = g.getV();
+		for(node_data a: nodes)
+			a.setWeight(Double.MAX_VALUE);
+	}
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub

@@ -61,7 +61,10 @@ public class Node implements node_data{
 
 	@Override
 	public void setLocation(Point3D p) {
-		this._p=new Point3D(p);
+		if(p!=null)
+			this._p=new Point3D(p);
+		else
+			System.out.println("There is no location!!!");
 	}
 
 	@Override

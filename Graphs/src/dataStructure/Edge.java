@@ -4,14 +4,14 @@ import dataStructure.edge_data;
 public class Edge implements edge_data{
 	
 	private int _src;
-	private int _dest;
+	private int _dst;
 	private double _weight;
 	private String _info;
 	private int _tag;
 	
 	public Edge() {
 		this._src=0;
-		this._dest=0;
+		this._dst=0;
 		this._weight=0;
 		this._info="";
 		this._tag=0;
@@ -19,7 +19,7 @@ public class Edge implements edge_data{
 
 	public Edge(int s,int d,double w) {
 		this._src=s;  
-		this._dest=d;
+		this._dst=d;
 		this._weight=w;
 		this._info="";
 		this._tag=0;
@@ -27,7 +27,7 @@ public class Edge implements edge_data{
 	
 	public Edge(int s,int d,double w,String str,int t) {
 		this._src=s;  
-		this._dest=d;
+		this._dst=d;
 		this._weight=w;
 		this._info=str;
 		this._tag=t;
@@ -40,7 +40,7 @@ public class Edge implements edge_data{
 
 	@Override
 	public int getDest() {
-		return this._dest;
+		return this._dst;
 	}
 
 	@Override

@@ -22,8 +22,12 @@ public class DGraph implements Serializable, graph {
 	}
 
 	public edge_data getEdge(int src, int dest) {
-		Node s=(Node) nodes.get(src);
-		return s.getEdgesOf().get(dest);
+		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
+			Node s=(Node) nodes.get(src);
+			return s.getEdgesOf().get(dest);
+		}
+		System.out.println("src ot dst doesnt exist");
+		return null;
 	}
 
 	public void addNode(node_data n) {
