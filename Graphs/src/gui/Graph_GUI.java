@@ -226,6 +226,7 @@ public class Graph_GUI {
 		//gg.reversedGraph();
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(gg.g);
+		System.out.println(ga.shortestPathDist(0, 8));
 		
 		
 		

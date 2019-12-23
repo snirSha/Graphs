@@ -120,16 +120,44 @@ public class Graph_Algo implements graph_algorithms{
 	}
 
 	@Override
-	public double shortestPathDist(int src, int dest) {
-		
-		return 0;
+	public double shortestPathDist(int src, int dst) {
+		zeroTags();
+		maxValueWeight();
+		Node source = (Node)g.getNode(src);
+		Node dest = (Node)g.getNode(dst);
+		source.setWeight(0);
+		int count = g.nodeSize();
+		while (source != dest && count > 0) {
+			Node next = new Node();
+			next.setWeight(Integer.MAX_VALUE);
+			source.setTag(1);
+			Collection<Edge> edgesOfN = source.getEdgesOf().values();
+			for(Edge e: edgesOfN) {
+				
+				Node edgeDst = (Node)g.getNode(e.getDest());
+				edgeDst.setWeight(Math.min(edgeDst.getTag(), source.getWeight() + e.getWeight()));
+				if(edgeDst.getWeight() < next.getWeight()) {
+					next = edgeDst;
+				}
+			}
+			if(source.getTag() == 0) {
+				count--;
+				source.setTag(1);
+			}
+			source = next;
+		}
+		return source.getKey();
 	}
+	
+	
+	
 
 	private void maxValueWeight() {//helper function to shortestPathDist
 		Collection<node_data> nodes = g.getV();
 		for(node_data a: nodes)
 			a.setWeight(Double.MAX_VALUE);
 	}
+	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
@@ -150,5 +178,4 @@ public class Graph_Algo implements graph_algorithms{
 		newG.init(filename);
 		return newG.g;
 	}
-
 }
