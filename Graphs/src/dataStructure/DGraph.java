@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
-import gui.Graph_GUI;
-import utils.StdDraw;
 
 
 public class DGraph implements Serializable, graph {
@@ -79,10 +76,11 @@ public class DGraph implements Serializable, graph {
 	}
 
 	public Collection<edge_data> getE(int node_id) {
-		Node n=(Node) nodes.get(node_id);
 		Collection<edge_data> list=new ArrayList<edge_data>();
-		list.addAll(n._edges.values());
-
+		if(nodes.containsKey(node_id)) {
+			Node n=(Node) nodes.get(node_id);
+			list.addAll(n._edges.values());
+		}
 		return list;
 	}
 

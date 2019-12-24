@@ -5,11 +5,8 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Collection;
-
 import algorithms.Graph_Algo;
-import algorithms.graph_algorithms;
 import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
@@ -112,13 +109,16 @@ public class Graph_GUI {
 
 	public void drawDGraph() {
 		try {
-			if(g.getV() != null) {
+			if(g.getV() != null && g.getV().size() != 0) {
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
 
 				drawEdges();
 				drawNodes();
+			}
+			else {
+				System.out.println("Nothing to draw");
 			}
 		}catch(Exception e){
 			System.out.println("Nothing to draw");
@@ -204,7 +204,7 @@ public class Graph_GUI {
 		//System.out.println(gg.g.edgeSize());
 		//StdDraw.clear();
 		//gg.reversedGraph();
-		Graph_Algo ga = new Graph_Algo();
+
 //		ga.init(gg.g);
 //		System.out.println("shortest path is: "+ga.shortestPathDist(0, 2));
 //		System.out.println("isConnected: "+ga.isConnected());
@@ -220,16 +220,15 @@ public class Graph_GUI {
 		
 		Graph_GUI gg2 = new Graph_GUI();
 		gg2.g = (DGraph) gg.ga.copy();
-		gg2.drawDGraph();
+//		gg2.drawDGraph();
 		
-		ga.init(gg2.g);
-		System.out.println("shortest path is: "+ga.shortestPathDist(0, 2));
-		System.out.println("isConnected: "+ga.isConnected());
-		ArrayList<node_data> ans=(ArrayList<node_data>) ga.shortestPath(0,2);
-		System.out.println("List of nodes: ");
-		for(node_data ar:ans) {
-			System.out.print(ar.getKey()+",");
-		}
+		gg2.ga.save("testgg2");
+		Graph_Algo ga3 = new Graph_Algo();
+		ga3.init("testgg2");
+		System.out.println(ga3.g.getE(0).size());
+	
+
+
 
 		
 	

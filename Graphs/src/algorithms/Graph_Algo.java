@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,13 +23,16 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
-	public graph g;
-
+public class Graph_Algo implements graph_algorithms, Serializable{
+	public DGraph g;
+	
+	public Graph_Algo() {
+		this.g = new DGraph();
+	}
 
 	@Override
 	public void init(graph g) {
-		this.g = g;		
+		this.g = (DGraph) g;		
 	}
 
 	@Override
@@ -37,10 +41,11 @@ public class Graph_Algo implements graph_algorithms{
 		{    
 			FileInputStream file = new FileInputStream(file_name); 
 			ObjectInputStream in = new ObjectInputStream(file);
-			g = (DGraph)in.readObject(); 
+			this.g = (DGraph)in.readObject(); 
 			in.close(); 
 			file.close(); 
 			System.out.println("Object has been deserialized");
+			
 		} 
 
 		catch(IOException | ClassNotFoundException ex) 
@@ -178,7 +183,32 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
+		zeroTags();
+		List<node_data> ans = new ArrayList<>();
+		
+		return TSPHelp(targets, ans);
+	}
+	
+	private List<node_data> TSPHelp(List<Integer> targets, List<node_data> ans) {
+
+		
+		
+//		if(ans.size() == targets.size())
+//			return ans;
+//		for (Integer i: targets) {
+//			Node cur = (Node) g.getNode(i);
+//			if(cur.getTag() == 0) {
+//				cur.setTag(1);
+//				ans.add(cur);
+//			}
+//			List<Edge> edges = (List<Edge>) cur.getEdgesOf().values();
+//			List<Integer> edgesI = new ArrayList<>();
+//			for(Edge e: edges) {
+//				edgesI.add(e.getDest());
+//			}
+//			return TSPHelp(edgesI, ans);
+//		}
+//		return TSPHelp(targets, ans);
 		return null;
 	}
 
