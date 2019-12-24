@@ -124,29 +124,28 @@ public class Graph_Algo implements graph_algorithms{
 		zeroTags();
 		maxValueWeight();
 		Node source = (Node)g.getNode(src);
-		Node dest = (Node)g.getNode(dst);
 		source.setWeight(0);
-		int count = g.nodeSize();
-		while (source != dest && count > 0) {
-			Node next = new Node();
-			next.setWeight(Integer.MAX_VALUE);
-			source.setTag(1);
-			Collection<Edge> edgesOfN = source.getEdgesOf().values();
-			for(Edge e: edgesOfN) {
-				
-				Node edgeDst = (Node)g.getNode(e.getDest());
-				edgeDst.setWeight(Math.min(edgeDst.getTag(), source.getWeight() + e.getWeight()));
-				if(edgeDst.getWeight() < next.getWeight()) {
-					next = edgeDst;
-				}
-			}
-			if(source.getTag() == 0) {
-				count--;
-				source.setTag(1);
-			}
-			source = next;
+		
+		diakstra(src,dst);
+		return g.getNode(dst).getWeight();
+	}
+	
+	public void diakstra(int src,int dst) {
+		Node runner=(Node) g.getNode(src);
+		if((runner.getTag()==1 && runner.getKey()==dst) ||(dst==src) ) {
+			return;
 		}
-		return source.getKey();
+		Collection<edge_data> edges=g.getE(src);
+		for(edge_data e:edges) {
+			double newWeight=runner.getWeight()+e.getWeight();
+			double oldWeight=g.getNode(e.getDest()).getWeight();
+			if(newWeight<oldWeight) {
+				g.getNode(e.getDest()).setWeight(newWeight);
+			}
+			runner.setTag(1);
+
+			diakstra(e.getDest(),dst);
+		}
 	}
 	
 	
