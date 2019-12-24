@@ -175,10 +175,14 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
+		DGraph newG = new DGraph((DGraph) g);
+		return newG;
+		/*
 		String filename = "copyGraph.txt";
 		save(filename);
 		Graph_Algo newG = new Graph_Algo();
 		newG.init(filename);
 		return newG.g;
+		*/
 	}
 }

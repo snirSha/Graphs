@@ -32,6 +32,17 @@ public class Node implements node_data{
 		this._info=s;
 		this._tag=t;
 	}
+	public Node (Node other) {
+		this._edges = new HashMap<>();
+		for(Edge e: other.getEdgesOf().values()) {
+			this._edges.put(e.getDest(), new Edge(e));
+		}
+		_data = other._data;
+		_p = other._p;
+		_weight = other._weight;
+		_info = other._info;
+		_tag = other._tag;
+	}
 	
 //	public Node(Node other) {
 //		this._data=other._data;

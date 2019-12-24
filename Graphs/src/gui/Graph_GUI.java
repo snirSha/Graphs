@@ -139,7 +139,7 @@ public class Graph_GUI {
 
 	public void drawDGraph() {
 		try {
-			if(g.getV() != null) {
+			if(g.getV().size() != 0) {
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
@@ -147,13 +147,15 @@ public class Graph_GUI {
 				drawEdges();
 				drawNodes();
 			}
+			else {
+				System.out.println("Nothing to draw");
+			}
 		}catch(Exception e){
 			System.out.println("Nothing to draw");
 		}
 	}
 	public void deleteGraph() {
 		StdDraw.clear();
-
 	}
 
 	public static void main (String [] args) {
@@ -233,14 +235,14 @@ public class Graph_GUI {
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(gg.g);
 		System.out.println("shortest path is: "+ga.shortestPathDist(0, 10));
-		gg.drawDGraph();
+		//gg.drawDGraph();
 		
 		
-//		Graph_GUI gg2 = new Graph_GUI();
-//		gg2.g = (DGraph) ga.copy();
+		Graph_GUI gg2 = new Graph_GUI();
+		gg2.g = (DGraph) ga.copy();
 //		System.out.println(ga.isConnected());
 //		gg2.g = (DGraph) ga.copy();
-//		gg2.drawDGraph();
+		gg2.drawDGraph();
 		
 	
 	}

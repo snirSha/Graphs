@@ -12,10 +12,24 @@ import utils.StdDraw;
 
 public class DGraph implements Serializable, graph {
 
-	public static HashMap<Integer, node_data> nodes = new HashMap<>();//1,a    2,b    3,c   4,d    |    data,Node
-	private int counterEdges=0;
-	private int changes=0;//every change in the graph the counter goes up by one
-
+	public HashMap<Integer, node_data> nodes;//1,a    2,b    3,c   4,d    |    data,Node
+	private int counterEdges;
+	private int changes;//every change in the graph the counter goes up by one
+	
+	public DGraph() {
+		nodes = new HashMap<>();
+		counterEdges = 0;
+		changes = 0;
+	}
+	
+	public DGraph(DGraph other) {//deep copy
+		nodes = new HashMap<>();
+		for(node_data n: other.nodes.values()) {
+			this.nodes.put(n.getKey(), new Node((Node) n));
+		}
+		this.counterEdges = other.counterEdges;
+		this.changes = other.changes;
+	}
 
 	public node_data getNode(int key) {
 		return nodes.get(key);

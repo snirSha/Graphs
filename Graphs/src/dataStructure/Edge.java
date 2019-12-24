@@ -32,6 +32,9 @@ public class Edge implements edge_data{
 		this._info=str;
 		this._tag=t;
 	}
+	public Edge(Edge other) {
+		this(other._src,other._dst,other._weight,other._info,other._tag);
+	}
 	
 	@Override
 	public int getSrc() {
