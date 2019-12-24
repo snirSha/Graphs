@@ -5,6 +5,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import algorithms.Graph_Algo;
@@ -236,6 +237,11 @@ public class Graph_GUI {
 		ga.init(gg.g);
 		System.out.println("shortest path is: "+ga.shortestPathDist(0, 10));
 		//gg.drawDGraph();
+		ArrayList<node_data> ans=(ArrayList<node_data>) ga.shortestPath(0,10);
+		System.out.println("List of nodes: ");
+		for(node_data ar:ans) {
+			System.out.print(ar.getKey()+",");
+		}
 		
 		
 		Graph_GUI gg2 = new Graph_GUI();

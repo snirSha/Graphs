@@ -128,13 +128,30 @@ public class Graph_Algo implements graph_algorithms{
 		String str="";
 		
 		diakstra(src,dst,str);
-		System.out.println("The String is: "+g.getNode(dst).getInfo());
 		return g.getNode(dst).getWeight();
+	}
+	
+	@Override
+	public List<node_data> shortestPath(int src, int dest) {
+		String str="";
+		int k;
+		ArrayList<node_data> arr=new ArrayList<>();
+		diakstra(src,dest,str);
+		String ans =g.getNode(dest).getInfo();
+		ans=ans.substring(1);
+		System.out.println("The String is:"+ans);
+		String[] strArray=ans.split(",");
+		for (int i = 0; i < strArray.length; i++) {
+			k=Integer.parseInt(strArray[i]);
+			node_data tmp=g.getNode(k);
+			arr.add(tmp);
+		}
+		return arr;
 	}
 	
 	public void diakstra(int src,int dst,String str) {
 		Node runner=(Node) g.getNode(src);
-		if((runner.getTag()==1 && runner.getKey()==dst) ||(dst==src) ) {
+		if((runner.getTag()==1 || runner.getKey()==dst) ||(dst==src) ) {
 			return;
 		}
 		Collection<edge_data> edges=g.getE(src);
@@ -143,12 +160,11 @@ public class Graph_Algo implements graph_algorithms{
 			double oldWeight=g.getNode(e.getDest()).getWeight();
 			if(newWeight<oldWeight) {
 				g.getNode(e.getDest()).setWeight(newWeight);
-				g.getNode(e.getDest()).setInfo(str+src+",");
+				g.getNode(e.getDest()).setInfo(str+","+src);
 			}
-			str+=runner.getInfo();
 			runner.setTag(1);
 
-			diakstra(e.getDest(),dst,str);
+			diakstra(e.getDest(),dst,str+","+src);
 		}
 	}
 	
@@ -161,11 +177,7 @@ public class Graph_Algo implements graph_algorithms{
 			a.setWeight(Double.MAX_VALUE);
 	}
 	
-	@Override
-	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
