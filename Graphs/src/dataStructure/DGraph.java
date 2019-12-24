@@ -47,6 +47,7 @@ public class DGraph implements Serializable, graph {
 	public void addNode(node_data n) {
 		Node no = (Node)n;
 		if(!nodes.containsKey(no.getKey())) {
+			
 			changes++;//adding a node
 			nodes.put(n.getKey(), n);
 		}

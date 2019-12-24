@@ -32,7 +32,8 @@ public class Node implements node_data{
 		this._info=s;
 		this._tag=t;
 	}
-	public Node (Node other) {
+	public Node (Node other) {//deep copy
+		count++;
 		this._edges = new HashMap<>();
 		for(Edge e: other.getEdgesOf().values()) {
 			this._edges.put(e.getDest(), new Edge(e));
@@ -44,13 +45,6 @@ public class Node implements node_data{
 		_tag = other._tag;
 	}
 	
-//	public Node(Node other) {
-//		this._data=other._data;
-//		this._p=other._p;
-//		this._weight=other._weight;
-//		this._tag=other._tag;
-//		this._info=other._info;
-//	}
 	
 	public void addEdge(Edge e) {
 		if(this.getKey()==e.getSrc()) {

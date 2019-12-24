@@ -131,6 +131,32 @@ public class Graph_Algo implements graph_algorithms{
 		return g.getNode(dst).getWeight();
 	}
 	
+	public void diakstra(int src,int dst,String str) {
+		Node runner=(Node) g.getNode(src);
+		if(runner.getTag()==1 && dst==src ) {
+			return;
+		}
+		Collection<edge_data> edges=g.getE(src);
+		for(edge_data e:edges) {
+			double newWeight=runner.getWeight()+e.getWeight();
+			double oldWeight=g.getNode(e.getDest()).getWeight();
+			if(newWeight<oldWeight) {
+				g.getNode(e.getDest()).setWeight(newWeight);
+				g.getNode(e.getDest()).setInfo(str+","+src);
+			}
+			runner.setTag(1);
+			diakstra(e.getDest(),dst,str+","+src);
+		}
+	}
+	
+	
+	private void maxValueWeight() {//helper function to shortestPathDist
+		Collection<node_data> nodes = g.getV();
+		for(node_data a: nodes)
+			a.setWeight(Double.MAX_VALUE);
+	}
+
+	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		String str="";
@@ -146,38 +172,9 @@ public class Graph_Algo implements graph_algorithms{
 			node_data tmp=g.getNode(k);
 			arr.add(tmp);
 		}
+		arr.add(g.getNode(dest));
 		return arr;
 	}
-	
-	public void diakstra(int src,int dst,String str) {
-		Node runner=(Node) g.getNode(src);
-		if((runner.getTag()==1 || runner.getKey()==dst) ||(dst==src) ) {
-			return;
-		}
-		Collection<edge_data> edges=g.getE(src);
-		for(edge_data e:edges) {
-			double newWeight=runner.getWeight()+e.getWeight();
-			double oldWeight=g.getNode(e.getDest()).getWeight();
-			if(newWeight<oldWeight) {
-				g.getNode(e.getDest()).setWeight(newWeight);
-				g.getNode(e.getDest()).setInfo(str+","+src);
-			}
-			runner.setTag(1);
-
-			diakstra(e.getDest(),dst,str+","+src);
-		}
-	}
-	
-	
-	
-
-	private void maxValueWeight() {//helper function to shortestPathDist
-		Collection<node_data> nodes = g.getV();
-		for(node_data a: nodes)
-			a.setWeight(Double.MAX_VALUE);
-	}
-	
-	
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
@@ -189,12 +186,5 @@ public class Graph_Algo implements graph_algorithms{
 	public graph copy() {
 		DGraph newG = new DGraph((DGraph) g);
 		return newG;
-		/*
-		String filename = "copyGraph.txt";
-		save(filename);
-		Graph_Algo newG = new Graph_Algo();
-		newG.init(filename);
-		return newG.g;
-		*/
 	}
 }
