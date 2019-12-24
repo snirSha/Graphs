@@ -125,12 +125,14 @@ public class Graph_Algo implements graph_algorithms{
 		maxValueWeight();
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
+		String str="";
 		
-		diakstra(src,dst);
+		diakstra(src,dst,str);
+		System.out.println("The String is: "+g.getNode(dst).getInfo());
 		return g.getNode(dst).getWeight();
 	}
 	
-	public void diakstra(int src,int dst) {
+	public void diakstra(int src,int dst,String str) {
 		Node runner=(Node) g.getNode(src);
 		if((runner.getTag()==1 && runner.getKey()==dst) ||(dst==src) ) {
 			return;
@@ -141,10 +143,12 @@ public class Graph_Algo implements graph_algorithms{
 			double oldWeight=g.getNode(e.getDest()).getWeight();
 			if(newWeight<oldWeight) {
 				g.getNode(e.getDest()).setWeight(newWeight);
+				g.getNode(e.getDest()).setInfo(str+src+",");
 			}
+			str+=runner.getInfo();
 			runner.setTag(1);
 
-			diakstra(e.getDest(),dst);
+			diakstra(e.getDest(),dst,str);
 		}
 	}
 	

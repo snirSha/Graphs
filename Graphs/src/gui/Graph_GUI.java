@@ -164,7 +164,7 @@ public class Graph_GUI {
 		Point3D p3=new Point3D(-50,15);
 		Point3D p4=new Point3D(15,50);
 		Point3D p5=new Point3D(10,40);
-		Point3D p6=new Point3D(5,30);
+		Point3D p6=new Point3D(10,30);
 		Point3D p7=new Point3D(0,10);
 		Point3D p8=new Point3D(-10,2);
 		Point3D p9=new Point3D(-50,-1);
@@ -233,14 +233,14 @@ public class Graph_GUI {
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(gg.g);
 		System.out.println("shortest path is: "+ga.shortestPathDist(0, 10));
+		gg.drawDGraph();
 		
 		
-		
-		Graph_GUI gg2 = new Graph_GUI();
-		gg2.g = (DGraph) ga.copy();
-		System.out.println(ga.isConnected());
-		gg2.g = (DGraph) ga.copy();
-		gg2.drawDGraph();
+//		Graph_GUI gg2 = new Graph_GUI();
+//		gg2.g = (DGraph) ga.copy();
+//		System.out.println(ga.isConnected());
+//		gg2.g = (DGraph) ga.copy();
+//		gg2.drawDGraph();
 		
 	
 	}
