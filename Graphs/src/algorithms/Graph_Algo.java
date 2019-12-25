@@ -129,7 +129,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
 		String str="";
-		int areWeInLoop=2;
+		int areWeInLoop=g.nodeSize();
 		diakstra(src,dst,str,areWeInLoop,src);
 		if(g.getNode(dst).getWeight()!=Double.MAX_VALUE)
 			return g.getNode(dst).getWeight();
@@ -176,7 +176,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		maxValueWeight();
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
-		int areWeInLoop=2;
+		int areWeInLoop=g.nodeSize();
 
 		ArrayList<node_data> arr=new ArrayList<>();
 
@@ -215,6 +215,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				}
 			}
 		}
+		System.out.println("There is no path between the nodes of targets list");
 		return null;
 	}
 	private boolean checkEquals(List<Integer> targets,List<node_data> array) {
