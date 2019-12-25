@@ -18,28 +18,31 @@ import utils.StdDraw;
 public class Graph_GUI{
 	
 	Graph_Algo ga;
-	DGraph g;
+	//DGraph g;
 
 
 	public Graph_GUI() {
 		ga = new Graph_Algo();
-		g = new DGraph();
-		ga.init(g);
+		//g = new DGraph();
+		//ga.init(g);
 	}
 
 	public Graph_GUI(graph g) {
-		this.g = (DGraph) g;
+//		this.g = (DGraph) g;
+//		ga.init(g);
+		
+		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
 
 	public void addNode(Node a) {
-		g.addNode(a);
+		ga.g.addNode(a);
 	}
 
 	public void drawNodes() {
 
 		try {
-			Collection<node_data> n=g.getV();
+			Collection<node_data> n=ga.g.getV();
 			for (node_data a:n) {
 				double x=a.getLocation().x();
 				double y=a.getLocation().y();
@@ -60,15 +63,15 @@ public class Graph_GUI{
 
 		try {
 
-			Collection<node_data> allNodes=g.getV();
+			Collection<node_data> allNodes=ga.g.getV();
 			if(allNodes != null) {
 				for(node_data n:allNodes) {
-					Collection<edge_data> allEdgesOfNode=g.getE(n.getKey());
+					Collection<edge_data> allEdgesOfNode=ga.g.getE(n.getKey());
 					for(edge_data edges:allEdgesOfNode) {
-						double Sx = g.getNode(edges.getSrc()).getLocation().x();
-						double Sy = g.getNode(edges.getSrc()).getLocation().y();
-						double Dx = g.getNode(edges.getDest()).getLocation().x();
-						double Dy = g.getNode(edges.getDest()).getLocation().y();
+						double Sx = ga.g.getNode(edges.getSrc()).getLocation().x();
+						double Sy = ga.g.getNode(edges.getSrc()).getLocation().y();
+						double Dx = ga.g.getNode(edges.getDest()).getLocation().x();
+						double Dy = ga.g.getNode(edges.getDest()).getLocation().y();
 
 						StdDraw.setPenRadius(0.005);
 						StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
@@ -102,19 +105,19 @@ public class Graph_GUI{
 
 
 	public void removeNode(int x) {
-		g.removeNode(x);
+		ga.g.removeNode(x);
 	}
 	public void removeEdge(int x,int y) {
-		g.removeEdge(x,y);
+		ga.g.removeEdge(x,y);
 	}
 
 	public void reversedGraph() {
-		((DGraph) g).reversedGraph();
+		((DGraph) ga.g).reversedGraph();
 	}
 
 	public void drawDGraph() {
 		try {
-			if(g.getV() != null && g.getV().size() != 0) {
+			if(ga.g.getV() != null && ga.g.getV().size() != 0) {
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
@@ -173,11 +176,11 @@ public class Graph_GUI{
 		//		gg.addNode(k);
 
 
-		gg.g.connect(a.getKey(),b.getKey(),4);
-		gg.g.connect(a.getKey(),d.getKey(), 1);
-		gg.g.connect(b.getKey(),c.getKey(),2);
-		gg.g.connect(c.getKey(),d.getKey(), 3);
-		gg.g.connect(d.getKey(), b.getKey(), 1);
+		gg.ga.g.connect(a.getKey(),b.getKey(),4);
+		gg.ga.g.connect(a.getKey(),d.getKey(), 1);
+		gg.ga.g.connect(b.getKey(),c.getKey(),2);
+		gg.ga.g.connect(c.getKey(),d.getKey(), 3);
+		gg.ga.g.connect(d.getKey(), b.getKey(), 1);
 		//		gg.g.connect(a.getKey(),e.getKey(),12);
 		//		gg.g.connect(b.getKey(),f.getKey(), 0);
 		//		gg.g.connect(b.getKey(),j.getKey(),1);
@@ -253,17 +256,17 @@ public class Graph_GUI{
 		 * init,save check
 		 */
 				Graph_GUI gg2 = new Graph_GUI();
-				gg2.g = (DGraph) gg.ga.copy();
-				//gg2.drawDGraph();
-				System.out.println(gg2.g.getV().size());
+				gg2.drawDGraph();
+				gg2.ga.init(gg.ga.copy());
+				gg2.drawDGraph();
+				System.out.println(gg2.ga.g.getV().size());
 				System.out.println(gg2.ga.g.getV().size());
 				
 		
 				gg2.ga.save("testgg2.txt");
 				Graph_GUI gg3 = new Graph_GUI();
+				System.out.println(gg3.ga.g.getV().size());
 				gg3.ga.init("testgg2.txt");
-				
-				System.out.println(gg3.ga.g + " omer " + gg3.g);
 				System.out.println(gg3.ga.g.getV().size());
 
 
