@@ -5,6 +5,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,7 +15,8 @@ import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
 
-public class Graph_GUI {
+public class Graph_GUI{
+	
 	Graph_Algo ga;
 	DGraph g;
 
@@ -212,53 +214,57 @@ public class Graph_GUI {
 		/*
 		 * check shortestPathDist and shortestPath
 		 */
-		gg.drawDGraph();
-
-		gg.ga.init(gg.g);
-		System.out.println("shortest path is: "+gg.ga.shortestPathDist(3, 0));
-		System.out.println("isConnected: "+gg.ga.isConnected());
-		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(3,0);
-		if(ans!=null) {
-			System.out.println("List of nodes: ");
-			for(node_data ar:ans) {
-				System.out.print(ar.getKey()+",");
-			}
-		}
-		else {
-			System.out.println("null");
-		}
+//		gg.drawDGraph();
+//
+//		gg.ga.init(gg.g);
+//		System.out.println("shortest path is: "+gg.ga.shortestPathDist(3, 0));
+//		System.out.println("isConnected: "+gg.ga.isConnected());
+//		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(3,0);
+//		if(ans!=null) {
+//			System.out.println("List of nodes: ");
+//			for(node_data ar:ans) {
+//				System.out.print(ar.getKey()+",");
+//			}
+//		}
+//		else {
+//			System.out.println("null");
+//		}
 
 
 
 		/*
 		 * check TSP
 		 */
-				gg.ga.init(gg.g);
-				List<Integer> targets=new ArrayList<>();
-				targets.add(3);
-				targets.add(1);
-				targets.add(0);
-				List<node_data> answer=gg.ga.TSP(targets);
-				System.out.println("\nThe TSP List is:");
-				if(answer==null)
-					System.out.println("null");
-				else {
-					for(node_data l:answer)
-						System.out.print(l.getKey()+",");
-				}
+//				gg.ga.init(gg.g);
+//				List<Integer> targets=new ArrayList<>();
+//				targets.add(3);
+//				targets.add(1);
+//				targets.add(0);
+//				List<node_data> answer=gg.ga.TSP(targets);
+//				System.out.println("\nThe TSP List is:");
+//				if(answer==null)
+//					System.out.println("null");
+//				else {
+//					for(node_data l:answer)
+//						System.out.print(l.getKey()+",");
+//				}
 
 		/*
 		 * init,save check
 		 */
-		//		Graph_GUI gg2 = new Graph_GUI();
-		//		gg2.g = (DGraph) gg.ga.copy();
-		//		gg2.drawDGraph();
-		//		System.out.println(gg2.g.getE(0).size());
-		//
-		//		gg2.ga.save("testgg2");
-		//		Graph_Algo ga3 = new Graph_Algo();
-		//		ga3.init("testgg2");
-		//		System.out.println(ga3.g.getE(0).size());
+				Graph_GUI gg2 = new Graph_GUI();
+				gg2.g = (DGraph) gg.ga.copy();
+				//gg2.drawDGraph();
+				System.out.println(gg2.g.getV().size());
+				System.out.println(gg2.ga.g.getV().size());
+				
+		
+				gg2.ga.save("testgg2.txt");
+				Graph_GUI gg3 = new Graph_GUI();
+				gg3.ga.init("testgg2.txt");
+				
+				System.out.println(gg3.ga.g + " omer " + gg3.g);
+				System.out.println(gg3.ga.g.getV().size());
 
 
 

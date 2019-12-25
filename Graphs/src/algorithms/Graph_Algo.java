@@ -21,7 +21,7 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms, Serializable{
+public class Graph_Algo implements graph_algorithms{
 	public DGraph g;
 
 	public Graph_Algo() {
@@ -58,7 +58,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		{
 			FileOutputStream file = new FileOutputStream(file_name); 
 			ObjectOutputStream out = new ObjectOutputStream(file);
-			out.writeObject(g);
+			out.writeObject(this.g);
 			out.close(); 
 			file.close(); 
 
