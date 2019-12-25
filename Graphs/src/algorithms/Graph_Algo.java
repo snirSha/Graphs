@@ -8,11 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import dataStructure.DGraph;
-import dataStructure.Edge;
 import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
@@ -25,7 +23,7 @@ import dataStructure.node_data;
  */
 public class Graph_Algo implements graph_algorithms, Serializable{
 	public DGraph g;
-	
+
 	public Graph_Algo() {
 		this.g = new DGraph();
 	}
@@ -45,7 +43,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			in.close(); 
 			file.close(); 
 			System.out.println("Object has been deserialized");
-			
+
 		} 
 
 		catch(IOException | ClassNotFoundException ex) 
@@ -131,16 +129,24 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
 		String str="";
-		
-		diakstra(src,dst,str);
-		return g.getNode(dst).getWeight();
+		int areWeInLoop=2;
+		diakstra(src,dst,str,areWeInLoop,src);
+		if(g.getNode(dst).getWeight()!=Double.MAX_VALUE)
+			return g.getNode(dst).getWeight();
+		else {
+			System.out.println("There is no path between src and dst");
+			return -1;
+		}
 	}
-	
-	public void diakstra(int src,int dst,String str) {
+
+	public void diakstra(int src,int dst,String str,int areWeInLoop, int theFirstsrc) {
 		Node runner=(Node) g.getNode(src);
-		if(runner.getTag()==1 && dst==src ) {
+		if(src==theFirstsrc)
+			areWeInLoop--;
+		if((runner.getTag()==1 && dst==src )||(areWeInLoop<0)) {
 			return;
 		}
+
 		Collection<edge_data> edges=g.getE(src);
 		for(edge_data e:edges) {
 			double newWeight=runner.getWeight()+e.getWeight();
@@ -150,67 +156,92 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				g.getNode(e.getDest()).setInfo(str+","+src);
 			}
 			runner.setTag(1);
-			diakstra(e.getDest(),dst,str+","+src);
+			diakstra(e.getDest(),dst,str+","+src,areWeInLoop,theFirstsrc);
 		}
 	}
-	
-	
+
+
 	private void maxValueWeight() {//helper function to shortestPathDist
 		Collection<node_data> nodes = g.getV();
 		for(node_data a: nodes)
 			a.setWeight(Double.MAX_VALUE);
 	}
 
-	
+
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		String str="";
 		int k;
-		ArrayList<node_data> arr=new ArrayList<>();
-		diakstra(src,dest,str);
-		String ans =g.getNode(dest).getInfo();
-		ans=ans.substring(1);
-		System.out.println("The String is:"+ans);
-		String[] strArray=ans.split(",");
-		for (int i = 0; i < strArray.length; i++) {
-			k=Integer.parseInt(strArray[i]);
-			node_data tmp=g.getNode(k);
-			arr.add(tmp);
-		}
-		arr.add(g.getNode(dest));
-		return arr;
-	}
+		zeroTags();
+		maxValueWeight();
+		Node source = (Node)g.getNode(src);
+		source.setWeight(0);
+		int areWeInLoop=2;
 
+		ArrayList<node_data> arr=new ArrayList<>();
+
+		diakstra(src,dest,str,areWeInLoop,src);
+		if(g.getNode(dest).getWeight()!=Double.MAX_VALUE) {
+
+			String ans =g.getNode(dest).getInfo();
+			ans=ans.substring(1);
+			String[] strArray=ans.split(",");
+			for (int i = 0; i < strArray.length; i++) {
+				k=Integer.parseInt(strArray[i]);
+				node_data tmp=g.getNode(k);
+				arr.add(tmp);
+			}
+			arr.add(g.getNode(dest));
+			return arr;
+		}
+		else {
+			System.out.println("There is no path between src and dst");
+			return null;
+		}
+	}
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		zeroTags();
-		List<node_data> ans = new ArrayList<>();
-		
-		return TSPHelp(targets, ans);
-	}
-	
-	private List<node_data> TSPHelp(List<Integer> targets, List<node_data> ans) {
+		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets))) {
 
-		
-		
-//		if(ans.size() == targets.size())
-//			return ans;
-//		for (Integer i: targets) {
-//			Node cur = (Node) g.getNode(i);
-//			if(cur.getTag() == 0) {
-//				cur.setTag(1);
-//				ans.add(cur);
-//			}
-//			List<Edge> edges = (List<Edge>) cur.getEdgesOf().values();
-//			List<Integer> edgesI = new ArrayList<>();
-//			for(Edge e: edges) {
-//				edgesI.add(e.getDest());
-//			}
-//			return TSPHelp(edgesI, ans);
-//		}
-//		return TSPHelp(targets, ans);
+			List<node_data> array=new ArrayList<>();
+
+			for(Integer i:targets) {
+				for(Integer j:targets) {
+					if(i!=j) {
+						array=shortestPath(i,j);
+						if((array!=null) && checkEquals(targets,array))
+							return array;
+					}
+				}
+			}
+		}
 		return null;
 	}
+	private boolean checkEquals(List<Integer> targets,List<node_data> array) {
+		int counter=0;
+		for(Integer i:targets) {
+			for(node_data n:array) {
+				if(i==n.getKey()) {
+					counter++;
+					break;
+				}
+			}
+		}
+		return (counter==targets.size());
+	}
+
+	private boolean checkTargetsInGraph(List<Integer> targets) {
+		int count=0;
+		Collection<node_data> nod=g.getV();
+		for(Integer i:targets) {
+			for(node_data n:nod) {
+				if(i==n.getKey())
+					count++;
+			}
+		}
+		return (count==targets.size());
+	}
+
 
 	@Override
 	public graph copy() {
