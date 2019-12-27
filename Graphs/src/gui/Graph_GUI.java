@@ -17,7 +17,7 @@ import utils.StdDraw;
 
 public class Graph_GUI{
 	
-	Graph_Algo ga;
+	public Graph_Algo ga;
 	//DGraph g;
 
 
@@ -260,9 +260,7 @@ public class Graph_GUI{
 				gg2.ga.init(gg.ga.copy());
 				gg2.drawDGraph();
 				System.out.println(gg2.ga.g.getV().size());
-				System.out.println(gg2.ga.g.getV().size());
-				
-		
+						
 				gg2.ga.save("testgg2.txt");
 				Graph_GUI gg3 = new Graph_GUI();
 				System.out.println(gg3.ga.g.getV().size());

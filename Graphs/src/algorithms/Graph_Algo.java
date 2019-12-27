@@ -129,7 +129,7 @@ public class Graph_Algo implements graph_algorithms{
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
 		String str="";
-		int areWeInLoop=2;
+		int areWeInLoop = g.nodeSize();
 		diakstra(src,dst,str,areWeInLoop,src);
 		if(g.getNode(dst).getWeight()!=Double.MAX_VALUE)
 			return g.getNode(dst).getWeight();
@@ -176,7 +176,7 @@ public class Graph_Algo implements graph_algorithms{
 		maxValueWeight();
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
-		int areWeInLoop=2;
+		int areWeInLoop = g.nodeSize();
 
 		ArrayList<node_data> arr=new ArrayList<>();
 
@@ -245,7 +245,7 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
-		DGraph newG = new DGraph((DGraph) g);
+		DGraph newG = new DGraph(g);
 		return newG;
 	}
 }
