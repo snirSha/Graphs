@@ -9,17 +9,17 @@ import java.util.HashMap;
 
 public class DGraph implements graph, Serializable {
 
-	
+
 	private HashMap<Integer, node_data> nodes;//1,a    2,b    3,c   4,d    |    data,Node
 	private int counterEdges;
 	private int changes;//every change in the graph the counter goes up by one
-	
+
 	public DGraph() {
 		nodes = new HashMap<>();
 		counterEdges = 0;
 		changes = 0;
 	}
-	
+
 	public DGraph(DGraph other) {//deep copy
 		nodes = new HashMap<>();
 		for(node_data n: other.nodes.values()) {
@@ -45,7 +45,7 @@ public class DGraph implements graph, Serializable {
 	public void addNode(node_data n) {
 		Node no = (Node)n;
 		if(!nodes.containsKey(no.getKey())) {
-			
+
 			changes++;//adding a node
 			nodes.put(n.getKey(), n);
 		}
@@ -64,7 +64,6 @@ public class DGraph implements graph, Serializable {
 				s.addEdge(e);
 				changes++;//adding an edge
 				counterEdges++;
-				//System.out.println(src + " -> " + dest);
 			}
 		}
 		else {
@@ -115,20 +114,14 @@ public class DGraph implements graph, Serializable {
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		
+
 		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
 			Node n = (Node) nodes.get(src);
 			if(n.getEdgesOf().containsKey(dest)) {
 				Node nSrc=(Node) nodes.get(src);
 				counterEdges--;
 				return nSrc.getEdgesOf().remove(dest);
-//				HashMap<Integer,Edge> edgesOfSrc=nSrc.getEdgesOf();
-//				edge_data ss= edgesOfSrc.remove(dest);
-//				if(ss!=null) {
-//					counterEdges--;
-//					changes++;//removing an edge
-//				}
-//				return ss;
+
 			}
 			else {
 				System.out.println("Edge doesnt exist");
@@ -137,7 +130,7 @@ public class DGraph implements graph, Serializable {
 			System.out.println("src or dest doesnt exist");
 		}
 		return null;
-		
+
 	}
 
 	@Override
@@ -157,20 +150,42 @@ public class DGraph implements graph, Serializable {
 
 	public void reversedGraph() {
 		zeroEdgeTag();
-		for(node_data a: nodes.values()) {
-			Node n = (Node)a;
-			for(Object e: n.getEdgesOf().values().toArray()) {
-
-				Edge ed = (Edge)e;
-				if(ed.getTag() == 0) {
-					connect(ed.getDest(), ed.getSrc(), ed.getWeight());
-					Edge ed1 = (Edge)getEdge(ed.getDest(), ed.getSrc());
-					ed1.setTag(1);
-					removeEdge(ed.getSrc(), ed.getDest());
+		Collection<node_data> nod=getV();
+		for(node_data a: nod) {
+			Collection<edge_data> edges=getE(a.getKey());
+			for(edge_data e: edges) {
+				if(!isBidirectional(e.getSrc(),e.getDest())){
+					Edge ed = (Edge)e;
+					if(ed.getTag() == 0) {
+						connect(ed.getDest(), ed.getSrc(), ed.getWeight());
+						Edge ed1 = (Edge)getEdge(ed.getDest(), ed.getSrc());
+						ed1.setTag(1);
+						removeEdge(ed.getSrc(), ed.getDest());
+					}
+				}
+				else {//if the edge is bidirectional -> change only the weight between the edges
+					Edge e1=(Edge)e;
+					Node nDst=(Node)getNode(e.getDest());
+					Edge e2=nDst.getEdgesOf().get(e.getSrc());
+					if(e1.getTag()==0 && e2.getTag()==0) {
+						double tmp=e1.getWeight();
+						e1.setWeight(e2.getWeight());
+						e2.setWeight(tmp);
+						e1.setTag(1);
+					}
 				}
 			}
 		}
 	}
+
+	private boolean isBidirectional(int src,int dst) {
+		Node nDst=(Node)getNode(dst);
+		if(nDst.getEdgesOf().containsKey(src))
+			return true;
+		else
+			return false;
+	}
+
 	private void zeroEdgeTag() {
 		Collection<node_data> nod = nodes.values();
 		for(node_data a:nod) {

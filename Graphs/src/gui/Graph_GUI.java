@@ -16,21 +16,15 @@ import utils.Point3D;
 import utils.StdDraw;
 
 public class Graph_GUI{
-	
+
 	public Graph_Algo ga;
-	//DGraph g;
 
 
 	public Graph_GUI() {
 		ga = new Graph_Algo();
-		//g = new DGraph();
-		//ga.init(g);
 	}
 
-	public Graph_GUI(graph g) {
-//		this.g = (DGraph) g;
-//		ga.init(g);
-		
+	public Graph_GUI(graph g) {		
 		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
@@ -40,7 +34,6 @@ public class Graph_GUI{
 	}
 
 	public void drawNodes() {
-
 		try {
 			Collection<node_data> n=ga.g.getV();
 			for (node_data a:n) {
@@ -56,13 +49,10 @@ public class Graph_GUI{
 		}catch(Exception e) {
 			System.out.println("No nodes to draw");
 		}
-
 	}
 
 	public void drawEdges() {
-
 		try {
-
 			Collection<node_data> allNodes=ga.g.getV();
 			if(allNodes != null) {
 				for(node_data n:allNodes) {
@@ -112,7 +102,7 @@ public class Graph_GUI{
 	}
 
 	public void reversedGraph() {
-		((DGraph) ga.g).reversedGraph();
+		ga.g.reversedGraph();
 	}
 
 	public void drawDGraph() {
@@ -136,13 +126,12 @@ public class Graph_GUI{
 		StdDraw.clear();
 
 	}
-
 	public static void main (String [] args) {
 		Graph_GUI gg = new Graph_GUI();
 		Point3D p0=new Point3D(-50,50);
-		Point3D p1=new Point3D(50,0);
-		Point3D p2=new Point3D(-50,0);
-		Point3D p3=new Point3D(50,50);
+		Point3D p1=new Point3D(50,50);
+		Point3D p2=new Point3D(0,0);
+		Point3D p3=new Point3D(0,-50);
 		//		Point3D p4=new Point3D(0,50);
 		//		Point3D p5=new Point3D(10,40);
 		//		Point3D p6=new Point3D(10,30);
@@ -151,8 +140,8 @@ public class Graph_GUI{
 		//		Point3D p9=new Point3D(-50,-1);
 		//		Point3D p10=new Point3D(60,-10);
 
-		Node a=new Node(p0,0, "", 0);
-		Node b=new Node(p1, 0, "", 0);
+		Node a=new Node(p0 ,0, "", 0);
+		Node b=new Node(p1, 0, "sad", 0);
 		Node c=new Node(p2, 0, "warryetj", 0);
 		Node d=new Node(p3, 0, "", 0);
 		//		Node d=new Node(p4, 0, "", 0);	
@@ -176,11 +165,16 @@ public class Graph_GUI{
 		//		gg.addNode(k);
 
 
-		gg.ga.g.connect(a.getKey(),b.getKey(),4);
-		gg.ga.g.connect(a.getKey(),d.getKey(), 1);
-		gg.ga.g.connect(b.getKey(),c.getKey(),2);
-		gg.ga.g.connect(c.getKey(),d.getKey(), 3);
-		gg.ga.g.connect(d.getKey(), b.getKey(), 1);
+		//gg.ga.g.connect(a.getKey(),b.getKey(),4);
+		gg.ga.g.connect(c.getKey(),a.getKey(), 1);
+		gg.ga.g.connect(c.getKey(),d.getKey(),2);
+		gg.ga.g.connect(c.getKey(),b.getKey(), 3);
+		gg.ga.g.connect(a.getKey(), c.getKey(), 2.5);
+		gg.ga.g.connect(b.getKey(), c.getKey(), 1.5);
+		gg.ga.g.connect(d.getKey(), c.getKey(), 3);
+		//gg.ga.g.connect(b.getKey(), a.getKey(), 4);		
+
+		//	gg.drawDGraph();
 		//		gg.g.connect(a.getKey(),e.getKey(),12);
 		//		gg.g.connect(b.getKey(),f.getKey(), 0);
 		//		gg.g.connect(b.getKey(),j.getKey(),1);
@@ -195,13 +189,12 @@ public class Graph_GUI{
 
 		/*
 		 * check remove
+		 */
+		//gg.removeEdge(0, 1);
 
-		gg.removeEdge(0, 1);
 
-		gg.removeNode(1);
-		gg.removeNode(8);
-//		gg.removeNode(0);
-//		 * */
+
+
 		//		System.out.println(gg.g.nodeSize());
 		//		System.out.println(gg.g.edgeSize());
 		//		gg.removeNode(0);
@@ -211,66 +204,66 @@ public class Graph_GUI{
 		//gg.removeEdge(0, 2);
 		//System.out.println(gg.g.edgeSize());
 		//StdDraw.clear();
-		//gg.reversedGraph();
 
 
 		/*
 		 * check shortestPathDist and shortestPath
 		 */
-//		gg.drawDGraph();
-//
-//		gg.ga.init(gg.g);
-//		System.out.println("shortest path is: "+gg.ga.shortestPathDist(3, 0));
-//		System.out.println("isConnected: "+gg.ga.isConnected());
-//		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(3,0);
-//		if(ans!=null) {
-//			System.out.println("List of nodes: ");
-//			for(node_data ar:ans) {
-//				System.out.print(ar.getKey()+",");
-//			}
-//		}
-//		else {
-//			System.out.println("null");
-//		}
 
+		System.out.println("shortest path is (weight): "+gg.ga.shortestPathDist(2,0));
+		
+		System.out.println("isConnected: "+gg.ga.isConnected());
+
+		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(2,0);
+		if(ans!=null) {
+			System.out.println("List of nodes (shortestPath): ");
+			for(node_data ar:ans) {
+				System.out.print(ar.getKey()+",");
+			}
+		}
+		else {
+			System.out.println("null");
+		}
 
 
 		/*
 		 * check TSP
 		 */
-//				gg.ga.init(gg.g);
-//				List<Integer> targets=new ArrayList<>();
-//				targets.add(3);
-//				targets.add(1);
-//				targets.add(0);
-//				List<node_data> answer=gg.ga.TSP(targets);
-//				System.out.println("\nThe TSP List is:");
-//				if(answer==null)
-//					System.out.println("null");
-//				else {
-//					for(node_data l:answer)
-//						System.out.print(l.getKey()+",");
-//				}
+
+		List<Integer> targets=new ArrayList<>();
+		targets.add(0);
+		targets.add(3);
+		targets.add(1);
+	
+		List<node_data> answer=gg.ga.TSP(targets);
+		System.out.println("\nThe TSP List is:");
+		if(answer==null)
+			System.out.println("null");
+		else {
+			for(node_data l:answer)
+				System.out.print(l.getKey()+",");
+		}
+		
+		gg.drawDGraph();
 
 		/*
 		 * init,save check
 		 */
-				Graph_GUI gg2 = new Graph_GUI();
-				gg2.drawDGraph();
-				gg2.ga.init(gg.ga.copy());
-				gg2.drawDGraph();
-				System.out.println(gg2.ga.g.getV().size());
-						
-				gg2.ga.save("testgg2.txt");
-				Graph_GUI gg3 = new Graph_GUI();
-				System.out.println(gg3.ga.g.getV().size());
-				gg3.ga.init("testgg2.txt");
-				System.out.println(gg3.ga.g.getV().size());
-
+		//				Graph_GUI oneWaySquare = new Graph_GUI();
+		//				oneWaySquare.g = (DGraph) gg.ga.copy();
+		//				
+		//				oneWaySquare.ga.save("oneWaySquare.txt");
+		//				
+		//				Graph_GUI ga3 = new Graph_GUI();
+		//				
+		//				ga3.ga.init("oneWaySquare.txt");
+		//				
+		//				ga3.drawDGraph();
 
 
 
 
 
 	}
+
 }

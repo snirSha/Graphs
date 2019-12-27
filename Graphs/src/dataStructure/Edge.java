@@ -72,5 +72,10 @@ public class Edge implements edge_data, Serializable{
 	public void setTag(int t) {
 		this._tag=t;		
 	}
+	
+	public void setWeight(double w) {
+		this._weight=w;
+	}
+	
 
 }
