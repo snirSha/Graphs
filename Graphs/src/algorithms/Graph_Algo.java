@@ -201,7 +201,7 @@ public class Graph_Algo implements graph_algorithms{
 	}
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets))) {
+		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets)) && isConnected()) {
 
 			List<node_data> array=new ArrayList<>();
 
