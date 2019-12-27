@@ -7,9 +7,10 @@ import java.util.HashMap;
 
 
 
-public class DGraph implements Serializable, graph {
+public class DGraph implements graph, Serializable {
 
-	public HashMap<Integer, node_data> nodes;//1,a    2,b    3,c   4,d    |    data,Node
+	
+	private HashMap<Integer, node_data> nodes;//1,a    2,b    3,c   4,d    |    data,Node
 	private int counterEdges;
 	private int changes;//every change in the graph the counter goes up by one
 	
@@ -57,7 +58,7 @@ public class DGraph implements Serializable, graph {
 
 		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
 			Node n = (Node)nodes.get(src);
-			if(!n._edges.containsKey(dest)) {
+			if(!n.getEdgesOf().containsKey(dest)) {
 				Node s=(Node) nodes.get(src);
 				Edge e=new Edge(src,dest,w);
 				s.addEdge(e);
@@ -79,7 +80,7 @@ public class DGraph implements Serializable, graph {
 		Collection<edge_data> list=new ArrayList<edge_data>();
 		if(nodes.containsKey(node_id)) {
 			Node n=(Node) nodes.get(node_id);
-			list.addAll(n._edges.values());
+			list.addAll(n.getEdgesOf().values());
 		}
 		return list;
 	}
@@ -96,8 +97,8 @@ public class DGraph implements Serializable, graph {
 
 			for(node_data a:nodes.values()) {//remove all 
 				Node tmp=(Node)a;
-				if(tmp._edges.containsKey(key)) {
-					tmp._edges.remove(key);
+				if(tmp.getEdgesOf().containsKey(key)) {
+					tmp.getEdgesOf().remove(key);
 					counterEdges--;
 				}
 			}
@@ -117,10 +118,10 @@ public class DGraph implements Serializable, graph {
 		
 		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
 			Node n = (Node) nodes.get(src);
-			if(n._edges.containsKey(dest)) {
+			if(n.getEdgesOf().containsKey(dest)) {
 				Node nSrc=(Node) nodes.get(src);
 				counterEdges--;
-				return nSrc._edges.remove(dest);
+				return nSrc.getEdgesOf().remove(dest);
 //				HashMap<Integer,Edge> edgesOfSrc=nSrc.getEdgesOf();
 //				edge_data ss= edgesOfSrc.remove(dest);
 //				if(ss!=null) {
@@ -158,7 +159,7 @@ public class DGraph implements Serializable, graph {
 		zeroEdgeTag();
 		for(node_data a: nodes.values()) {
 			Node n = (Node)a;
-			for(Object e: n._edges.values().toArray()) {
+			for(Object e: n.getEdgesOf().values().toArray()) {
 
 				Edge ed = (Edge)e;
 				if(ed.getTag() == 0) {
@@ -174,7 +175,7 @@ public class DGraph implements Serializable, graph {
 		Collection<node_data> nod = nodes.values();
 		for(node_data a:nod) {
 			Node n = (Node)a;
-			Collection<Edge> e = n._edges.values();
+			Collection<Edge> e = n.getEdgesOf().values();
 			for(edge_data ed: e) {
 				ed.setTag(0);
 			}

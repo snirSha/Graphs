@@ -5,6 +5,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,30 +15,34 @@ import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
 
-public class Graph_GUI {
+public class Graph_GUI{
+	
 	Graph_Algo ga;
-	DGraph g;
+	//DGraph g;
 
 
 	public Graph_GUI() {
 		ga = new Graph_Algo();
-		g = new DGraph();
-		ga.init(g);
+		//g = new DGraph();
+		//ga.init(g);
 	}
 
 	public Graph_GUI(graph g) {
-		this.g = (DGraph) g;
+//		this.g = (DGraph) g;
+//		ga.init(g);
+		
+		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
 
 	public void addNode(Node a) {
-		g.addNode(a);
+		ga.g.addNode(a);
 	}
 
 	public void drawNodes() {
 
 		try {
-			Collection<node_data> n=g.getV();
+			Collection<node_data> n=ga.g.getV();
 			for (node_data a:n) {
 				double x=a.getLocation().x();
 				double y=a.getLocation().y();
@@ -58,15 +63,15 @@ public class Graph_GUI {
 
 		try {
 
-			Collection<node_data> allNodes=g.getV();
+			Collection<node_data> allNodes=ga.g.getV();
 			if(allNodes != null) {
 				for(node_data n:allNodes) {
-					Collection<edge_data> allEdgesOfNode=g.getE(n.getKey());
+					Collection<edge_data> allEdgesOfNode=ga.g.getE(n.getKey());
 					for(edge_data edges:allEdgesOfNode) {
-						double Sx = g.getNode(edges.getSrc()).getLocation().x();
-						double Sy = g.getNode(edges.getSrc()).getLocation().y();
-						double Dx = g.getNode(edges.getDest()).getLocation().x();
-						double Dy = g.getNode(edges.getDest()).getLocation().y();
+						double Sx = ga.g.getNode(edges.getSrc()).getLocation().x();
+						double Sy = ga.g.getNode(edges.getSrc()).getLocation().y();
+						double Dx = ga.g.getNode(edges.getDest()).getLocation().x();
+						double Dy = ga.g.getNode(edges.getDest()).getLocation().y();
 
 						StdDraw.setPenRadius(0.005);
 						StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
@@ -100,19 +105,19 @@ public class Graph_GUI {
 
 
 	public void removeNode(int x) {
-		g.removeNode(x);
+		ga.g.removeNode(x);
 	}
 	public void removeEdge(int x,int y) {
-		g.removeEdge(x,y);
+		ga.g.removeEdge(x,y);
 	}
 
 	public void reversedGraph() {
-		((DGraph) g).reversedGraph();
+		((DGraph) ga.g).reversedGraph();
 	}
 
 	public void drawDGraph() {
 		try {
-			if(g.getV() != null && g.getV().size() != 0) {
+			if(ga.g.getV() != null && ga.g.getV().size() != 0) {
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
@@ -171,11 +176,11 @@ public class Graph_GUI {
 		//		gg.addNode(k);
 
 
-		gg.g.connect(a.getKey(),b.getKey(),4);
-		gg.g.connect(a.getKey(),d.getKey(), 1);
-		gg.g.connect(b.getKey(),c.getKey(),2);
-		gg.g.connect(c.getKey(),d.getKey(), 3);
-		gg.g.connect(d.getKey(), b.getKey(), 1);
+		gg.ga.g.connect(a.getKey(),b.getKey(),4);
+		gg.ga.g.connect(a.getKey(),d.getKey(), 1);
+		gg.ga.g.connect(b.getKey(),c.getKey(),2);
+		gg.ga.g.connect(c.getKey(),d.getKey(), 3);
+		gg.ga.g.connect(d.getKey(), b.getKey(), 1);
 		//		gg.g.connect(a.getKey(),e.getKey(),12);
 		//		gg.g.connect(b.getKey(),f.getKey(), 0);
 		//		gg.g.connect(b.getKey(),j.getKey(),1);
@@ -212,53 +217,57 @@ public class Graph_GUI {
 		/*
 		 * check shortestPathDist and shortestPath
 		 */
-		gg.drawDGraph();
-
-		gg.ga.init(gg.g);
-		System.out.println("shortest path is: "+gg.ga.shortestPathDist(3, 0));
-		System.out.println("isConnected: "+gg.ga.isConnected());
-		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(3,0);
-		if(ans!=null) {
-			System.out.println("List of nodes: ");
-			for(node_data ar:ans) {
-				System.out.print(ar.getKey()+",");
-			}
-		}
-		else {
-			System.out.println("null");
-		}
+//		gg.drawDGraph();
+//
+//		gg.ga.init(gg.g);
+//		System.out.println("shortest path is: "+gg.ga.shortestPathDist(3, 0));
+//		System.out.println("isConnected: "+gg.ga.isConnected());
+//		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(3,0);
+//		if(ans!=null) {
+//			System.out.println("List of nodes: ");
+//			for(node_data ar:ans) {
+//				System.out.print(ar.getKey()+",");
+//			}
+//		}
+//		else {
+//			System.out.println("null");
+//		}
 
 
 
 		/*
 		 * check TSP
 		 */
-				gg.ga.init(gg.g);
-				List<Integer> targets=new ArrayList<>();
-				targets.add(3);
-				targets.add(1);
-				targets.add(0);
-				List<node_data> answer=gg.ga.TSP(targets);
-				System.out.println("\nThe TSP List is:");
-				if(answer==null)
-					System.out.println("null");
-				else {
-					for(node_data l:answer)
-						System.out.print(l.getKey()+",");
-				}
+//				gg.ga.init(gg.g);
+//				List<Integer> targets=new ArrayList<>();
+//				targets.add(3);
+//				targets.add(1);
+//				targets.add(0);
+//				List<node_data> answer=gg.ga.TSP(targets);
+//				System.out.println("\nThe TSP List is:");
+//				if(answer==null)
+//					System.out.println("null");
+//				else {
+//					for(node_data l:answer)
+//						System.out.print(l.getKey()+",");
+//				}
 
 		/*
 		 * init,save check
 		 */
-		//		Graph_GUI gg2 = new Graph_GUI();
-		//		gg2.g = (DGraph) gg.ga.copy();
-		//		gg2.drawDGraph();
-		//		System.out.println(gg2.g.getE(0).size());
-		//
-		//		gg2.ga.save("testgg2");
-		//		Graph_Algo ga3 = new Graph_Algo();
-		//		ga3.init("testgg2");
-		//		System.out.println(ga3.g.getE(0).size());
+				Graph_GUI gg2 = new Graph_GUI();
+				gg2.drawDGraph();
+				gg2.ga.init(gg.ga.copy());
+				gg2.drawDGraph();
+				System.out.println(gg2.ga.g.getV().size());
+				System.out.println(gg2.ga.g.getV().size());
+				
+		
+				gg2.ga.save("testgg2.txt");
+				Graph_GUI gg3 = new Graph_GUI();
+				System.out.println(gg3.ga.g.getV().size());
+				gg3.ga.init("testgg2.txt");
+				System.out.println(gg3.ga.g.getV().size());
 
 
 

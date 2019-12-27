@@ -21,7 +21,7 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms, Serializable{
+public class Graph_Algo implements graph_algorithms{
 	public DGraph g;
 
 	public Graph_Algo() {
@@ -58,7 +58,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		{
 			FileOutputStream file = new FileOutputStream(file_name); 
 			ObjectOutputStream out = new ObjectOutputStream(file);
-			out.writeObject(g);
+			out.writeObject(this.g);
 			out.close(); 
 			file.close(); 
 
@@ -129,7 +129,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
 		String str="";
-		int areWeInLoop=g.nodeSize();
+		int areWeInLoop=2;
 		diakstra(src,dst,str,areWeInLoop,src);
 		if(g.getNode(dst).getWeight()!=Double.MAX_VALUE)
 			return g.getNode(dst).getWeight();
@@ -176,7 +176,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 		maxValueWeight();
 		Node source = (Node)g.getNode(src);
 		source.setWeight(0);
-		int areWeInLoop=g.nodeSize();
+		int areWeInLoop=2;
 
 		ArrayList<node_data> arr=new ArrayList<>();
 
@@ -201,7 +201,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	}
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets))) {
+		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets)) && isConnected()) {
 
 			List<node_data> array=new ArrayList<>();
 
@@ -215,7 +215,6 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				}
 			}
 		}
-		System.out.println("There is no path between the nodes of targets list");
 		return null;
 	}
 	private boolean checkEquals(List<Integer> targets,List<node_data> array) {
