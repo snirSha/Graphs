@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,27 +18,6 @@ import utils.Point3D;
 
 class Graph_Test {
 
-	//	public DGraph initConnectedGraph() {
-	//		Point3D pArr []= new Point3D[4];
-	//		pArr[0] = new Point3D(-5, 5);
-	//		pArr[1] = new Point3D(5, 5);
-	//		pArr[2] = new Point3D(5, -5);
-	//		pArr[3] = new Point3D(-5, -5);
-	//		
-	//		DGraph g = new DGraph();
-	//		Node arr[] = new Node[4];
-	//		for(int i = 0; i < arr.length; i++) {
-	//			arr[i] = new Node(pArr[i], 0, "", 0);
-	//			g.addNode(arr[i]);
-	//		}
-	//		g.connect(0, 1, 2);
-	//		g.connect(1, 2, 3);
-	//		g.connect(2, 3, 4);
-	//		g.connect(3, 1, 5);
-	//		return g;
-	//	}
-
-
 	@Test
 	void initTest() {
 		Graph_Algo ga = new Graph_Algo();
@@ -54,16 +34,15 @@ class Graph_Test {
 	void copyTest() {
 		Graph_Algo ga = new Graph_Algo();
 		ga.g.addNode(new Node());
-		ga.g.addNode(new Node(new Point3D(5, 5), 2, "", 0));
+		ga.g.addNode(new Node(1,new Point3D(5, 5), 2, "", 0));
 		ga.g.connect(0, 1, 2);
-		Graph_Algo ga2 = new Graph_Algo();
-		ga2 = (Graph_Algo) ga.copy();
-		Collection<edge_data> cl = ga2.g.getE(0);
+		graph ga2 =new DGraph();
+		ga2 =ga.copy();
+		Collection<edge_data> cl = ga2.getE(0);
 		for(edge_data e: cl) {
 			Edge ed = (Edge)e;
 			assertEquals(true, ed.getSrc() == 0 && ed.getDest() == 1);
 		}
-		//assertEquals(true, true);
 	}
 	/**
 	 * Init a graph from file
@@ -72,8 +51,8 @@ class Graph_Test {
 	@Test
 	void initAndSaveFromFileTest() {
 		Graph_Algo ga = new Graph_Algo();
-		ga.g.addNode(new Node());
-		ga.g.addNode(new Node(new Point3D(5, 5), 2, "", 0));
+		ga.g.addNode(new Node(4,new Point3D(15, 15), 3.5, "cz", 0));
+		ga.g.addNode(new Node(5,new Point3D(5, 5), 2, "asd", 0));
 		ga.g.connect(4, 5, 2);
 		ga.save("JunitTest");
 		Graph_Algo ga2 = new Graph_Algo();
@@ -93,7 +72,16 @@ class Graph_Test {
 	 */
 	@Test
 	void isConnectedTest() {
-//		fail("notTestedYet");
+		Graph_Algo ga = new Graph_Algo();
+		for(int i=0;i<11;i++) {//0 1 2 3 4 5 6 7 8 9 10
+			ga.g.addNode(new Node(i,new Point3D(i, i), 0, "cz", 0));
+		}
+		for(int j=0;j<10;j++) {
+			ga.g.connect(j,j+1 , 2);
+		}
+		assertEquals(false,ga.isConnected());
+		ga.g.connect(10, 0, 50);
+		assertEquals(true,ga.isConnected());
 	}
 	/**
 	 * returns the length of the shortest path between src to dest
@@ -103,7 +91,27 @@ class Graph_Test {
 	 */
 	@Test
 	void shortestPathDistTest() {
-		fail("notTestedYet");
+		Graph_Algo ga = new Graph_Algo();
+		ga.g.addNode(new Node(0,new Point3D(-50, -50), 0, "snir", 0));
+		ga.g.addNode(new Node(1,new Point3D(50, 50), 0, "rotze", 0));
+		ga.g.addNode(new Node(2,new Point3D(50, -50), 0, "shetishvy", 0));
+		ga.g.addNode(new Node(3,new Point3D(-50, 50), 0, "lo", 0));
+		ga.g.addNode(new Node(4,new Point3D(0, -75), 0, "hal", 0));
+		ga.g.addNode(new Node(5,new Point3D(0, 75), 0, "hapanim", 0));
+		ga.g.addNode(new Node(6,new Point3D(0, 0), 0, "ya shramu&*^^%#@", 0));
+		ga.g.connect(0,3, 2);
+		ga.g.connect(3,5, 1);
+		ga.g.connect(5,1, 5);
+		ga.g.connect(1,2, 0);
+		ga.g.connect(2,4, 6);
+		ga.g.connect(4,0, 3);
+		ga.g.connect(6,4, 4);
+		ga.g.connect(6,5, 2.5);
+		
+		assertEquals(ga.shortestPathDist(0, 2),8);
+		assertEquals(ga.shortestPathDist(6, 2),7.5);
+		assertEquals(ga.shortestPathDist(6, 3),9);
+		assertEquals(ga.shortestPathDist(0, 6),-1);//Error: can't get to node 6
 	}
 	/**
 	 * returns the the shortest path between src to dest - as an ordered List of nodes:
@@ -115,7 +123,48 @@ class Graph_Test {
 	 */
 	@Test
 	void shortestPathTest() {
-		fail("notTestedYet");
+		Graph_Algo ga = new Graph_Algo();
+		ga.g.addNode(new Node(0,new Point3D(0, 0), 0, "ba", 0));
+		ga.g.addNode(new Node(1,new Point3D(-50,-50), 0, "li", 0));
+		ga.g.addNode(new Node(2,new Point3D(0,75), 0, "lamut", 0));
+		ga.g.addNode(new Node(3,new Point3D(50,50), 0, "mehazaeen", 0));
+		ga.g.addNode(new Node(4,new Point3D(50,-50), 0, "hakatan", 0));
+		ga.g.addNode(new Node(5,new Point3D(0,-75), 0, "haze", 0));
+		ga.g.addNode(new Node(6,new Point3D(-50,50), 0, "sheli", 0));
+		ga.g.connect(0,1, 1);
+		ga.g.connect(0,2, 2);
+		ga.g.connect(0,3, 3);
+		ga.g.connect(0,4, 4);
+		ga.g.connect(0,5, 5);
+		ga.g.connect(0,6, 6);
+		ga.g.connect(1,0, 6);
+		ga.g.connect(2,0, 5);
+		ga.g.connect(3,0, 4);
+		ga.g.connect(4,0, 3);
+		ga.g.connect(5,0, 2);
+		ga.g.connect(6,0, 1);
+		ga.g.connect(6,1, 0);
+		ga.g.connect(1,2, 0);
+		ga.g.connect(2,3, 0);
+		ga.g.connect(3,4, 0);
+		ga.g.connect(4,5, 0);
+		ga.g.connect(5,6, 0);
+
+		List<node_data> ans=new ArrayList<>();
+		ans.add(ga.g.getNode(6));
+		ans.add(ga.g.getNode(1));
+		ans.add(ga.g.getNode(2));
+		List<node_data> ans2=ga.shortestPath(6, 2);
+		assertEquals(ans,ans2);
+	
+		ans.clear();
+		List<node_data> ans3=ga.shortestPath(0, 4);	
+		ans.add(ga.g.getNode(0));
+		ans.add(ga.g.getNode(1));
+		ans.add(ga.g.getNode(2));
+		ans.add(ga.g.getNode(3));
+		ans.add(ga.g.getNode(4));
+		assertEquals(ans,ans3);
 	}
 	/**
 	 * computes a relatively short path which visit each node in the targets List.
@@ -127,7 +176,49 @@ class Graph_Test {
 	 */
 	@Test
 	void TSPTest() {
-		fail("notTestedYet");
+		Graph_Algo ga = new Graph_Algo();
+		ga.g.addNode(new Node(0,new Point3D(0, 0), 0, "ra", 0));
+		ga.g.addNode(new Node(1,new Point3D(-10,-10), 0, "li", 0));
+		ga.g.addNode(new Node(2,new Point3D(10,10), 0, "ra", 0));
+		ga.g.addNode(new Node(3,new Point3D(-10,10), 0, "li", 0));
+		ga.g.addNode(new Node(4,new Point3D(0,-20), 0, "ra", 0));
+		ga.g.addNode(new Node(5,new Point3D(10, -10), 0, "li", 0));
+
+		ga.g.connect(0,1, 1);
+		ga.g.connect(1,0, 1.5);
+		ga.g.connect(0,2, 0);
+		ga.g.connect(2,0, 2);
+		ga.g.connect(0,3, 5);
+		ga.g.connect(3,0, 4);
+		ga.g.connect(0,4, 2);
+		ga.g.connect(4,0, 3);
+		ga.g.connect(0,5, 1.2);
+		ga.g.connect(5,0, 2.5);
+
+		List<Integer> targets=new ArrayList<>();
+		targets.add(1);
+		targets.add(2);
+		targets.add(3);
+		targets.add(4);
+		targets.add(5);
+
+		List<node_data> ans=ga.TSP(targets);
+		List<node_data> myAns=new ArrayList<>();
+		myAns.add(ga.g.getNode(1));
+		myAns.add(ga.g.getNode(0));
+		myAns.add(ga.g.getNode(2));
+		myAns.add(ga.g.getNode(0));
+		myAns.add(ga.g.getNode(3));
+		myAns.add(ga.g.getNode(0));
+		myAns.add(ga.g.getNode(4));
+		myAns.add(ga.g.getNode(0));
+		myAns.add(ga.g.getNode(5));
+				
+		assertEquals(myAns,ans);
+		
+		ga.g.removeNode(0);
+		ans=ga.TSP(targets);
+		assertEquals(ans,null);//Error: deleted all edges, there is no path between the nodes
 	}
 
 }

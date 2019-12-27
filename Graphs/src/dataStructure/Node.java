@@ -7,7 +7,7 @@ import utils.Point3D;
 
 public class Node implements node_data, Serializable{
 
-	private static int count = 0;
+	//private static int count = 0;
 	private HashMap<Integer, Edge> _edges = new HashMap<>(); //b.key,a->b     c.key,b->c     d.key,c->d     a.key,d->a  |  Edge.dest.key,Edge
 	private int _data;
 	private Point3D _p;
@@ -17,24 +17,24 @@ public class Node implements node_data, Serializable{
 	
 	
 	public Node() {
-		this._data = count;
-		count++;
+		this._data=0;
+		//count++;
 		this._p=null;
 		this._weight=0;
 		this._tag=0;
 		this._info="";
 	}
 	
-	public Node(Point3D p, double w, String s, int t) {
-		this._data = count;
-		count++;
+	public Node(int d,Point3D p, double w, String s, int t) {
+		this._data = d;
+		//count++;
 		this._p=new Point3D(p);
 		this._weight=w;
 		this._info=s;
 		this._tag=t;
 	}
 	public Node (Node other) {//deep copy
-		count++;
+		//count++;
 		this._edges = new HashMap<>();
 		for(Edge e: other.getEdgesOf().values()) {
 			this._edges.put(e.getDest(), new Edge(e));

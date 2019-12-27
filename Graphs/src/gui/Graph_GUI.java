@@ -140,10 +140,10 @@ public class Graph_GUI{
 		//		Point3D p9=new Point3D(-50,-1);
 		//		Point3D p10=new Point3D(60,-10);
 
-		Node a=new Node(p0 ,0, "", 0);
-		Node b=new Node(p1, 0, "sad", 0);
-		Node c=new Node(p2, 0, "warryetj", 0);
-		Node d=new Node(p3, 0, "", 0);
+		Node a=new Node(0,p0 ,0, "", 0);
+		Node b=new Node(1,p1, 0, "sad", 0);
+		Node c=new Node(2,p2, 0, "warryetj", 0);
+		Node d=new Node(3,p3, 0, "", 0);
 		//		Node d=new Node(p4, 0, "", 0);	
 		//		Node e=new Node(p5, 0, "", 0);
 		//		Node f=new Node(p6, 0, "", 0);
