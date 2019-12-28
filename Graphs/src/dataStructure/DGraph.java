@@ -36,7 +36,8 @@ public class DGraph implements graph, Serializable {
 	public edge_data getEdge(int src, int dest) {
 		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
 			Node s=(Node) nodes.get(src);
-			return s.getEdgesOf().get(dest);
+			if(s.getEdgesOf().get(dest)!=null)
+				return s.getEdgesOf().get(dest);
 		}
 		System.out.println("src ot dst doesnt exist");
 		return null;
@@ -56,7 +57,7 @@ public class DGraph implements graph, Serializable {
 
 	public void connect(int src, int dest, double w) {
 
-		if(nodes.containsKey(src) && nodes.containsKey(dest)) {
+		if(nodes.containsKey(src) && nodes.containsKey(dest) && (src!=dest)) {
 			Node n = (Node)nodes.get(src);
 			if(!n.getEdgesOf().containsKey(dest)) {
 				Node s=(Node) nodes.get(src);
@@ -67,7 +68,7 @@ public class DGraph implements graph, Serializable {
 			}
 		}
 		else {
-			System.out.println("src or dst doesnt exist");
+			System.out.println("src or dst doesnt exist OR src equals to dest");
 		}
 	}
 
@@ -86,9 +87,7 @@ public class DGraph implements graph, Serializable {
 
 	@Override
 	public node_data removeNode(int key) {
-
 		if(nodes.containsKey(key)) {
-
 			Node n=(Node) nodes.get(key);//find all the edges that connected to node(key)
 			int count=n.getEdgesOf().size();//every edge that we delete the counter goes down by one
 			counterEdges-=count;
@@ -102,6 +101,7 @@ public class DGraph implements graph, Serializable {
 				}
 			}
 			changes++;//removing node
+
 			return nodes.remove(key);
 
 		}else {
@@ -120,6 +120,7 @@ public class DGraph implements graph, Serializable {
 			if(n.getEdgesOf().containsKey(dest)) {
 				Node nSrc=(Node) nodes.get(src);
 				counterEdges--;
+				changes++;
 				return nSrc.getEdgesOf().remove(dest);
 
 			}
@@ -149,6 +150,7 @@ public class DGraph implements graph, Serializable {
 	}
 
 	public void reversedGraph() {
+		int saveTheChanges=changes;
 		zeroEdgeTag();
 		Collection<node_data> nod=getV();
 		for(node_data a: nod) {
@@ -176,6 +178,7 @@ public class DGraph implements graph, Serializable {
 				}
 			}
 		}
+		changes=saveTheChanges+1;
 	}
 
 	private boolean isBidirectional(int src,int dst) {

@@ -1,3 +1,5 @@
+package Tasts;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import dataStructure.node_data;
 import gui.Graph_GUI;
 import utils.Point3D;
 
-class Graph_Test {
+class Graph_Algo_Test {
 
 	@Test
 	void initTest() {
