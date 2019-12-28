@@ -88,32 +88,34 @@ public class Graph_GUI{
 			if(allNodes != null) {
 				for(node_data n:allNodes) {
 					Collection<edge_data> allEdgesOfNode=ga.g.getE(n.getKey());
-					for(edge_data edges:allEdgesOfNode) {
-						double Sx = ga.g.getNode(edges.getSrc()).getLocation().x();
-						double Sy = ga.g.getNode(edges.getSrc()).getLocation().y();
-						double Dx = ga.g.getNode(edges.getDest()).getLocation().x();
-						double Dy = ga.g.getNode(edges.getDest()).getLocation().y();
+					if(allEdgesOfNode != null && allEdgesOfNode.size() > 0) {
+						for(edge_data edges:allEdgesOfNode) {
+							double Sx = ga.g.getNode(edges.getSrc()).getLocation().x();
+							double Sy = ga.g.getNode(edges.getSrc()).getLocation().y();
+							double Dx = ga.g.getNode(edges.getDest()).getLocation().x();
+							double Dy = ga.g.getNode(edges.getDest()).getLocation().y();
 
-						StdDraw.setPenRadius(0.005);
-						StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
-						StdDraw.line(Sx,Sy,Dx,Dy);
+							StdDraw.setPenRadius(0.005);
+							StdDraw.setPenColor(StdDraw.ORANGE);//paint the line between the nodes in orange
+							StdDraw.line(Sx,Sy,Dx,Dy);
 
-						StdDraw.setPenRadius(0.02);
-						StdDraw.setPenColor(StdDraw.RED);
+							StdDraw.setPenRadius(0.02);
+							StdDraw.setPenColor(StdDraw.RED);
 
-						double arrowX= (Dx*8+Sx)/9;
-						double arrowY= (Dy*8+Sy)/9;
-						StdDraw.point(arrowX,arrowY);
+							double arrowX= (Dx*8+Sx)/9;
+							double arrowY= (Dy*8+Sy)/9;
+							StdDraw.point(arrowX,arrowY);
 
-						String te = edges.getWeight()+"";
+							String te = edges.getWeight()+"";
 
-						StdDraw.setPenRadius(0.1);
-						StdDraw.setPenColor(Color.BLACK);
+							StdDraw.setPenRadius(0.1);
+							StdDraw.setPenColor(Color.BLACK);
 
-						double newX= (Dx*4+Sx)/5;
-						double newY= (Dy*4+Sy)/5;
+							double newX= (Dx*4+Sx)/5;
+							double newY= (Dy*4+Sy)/5;
 
-						StdDraw.text(newX, newY, te);
+							StdDraw.text(newX, newY, te);
+						}
 					}
 				}
 			}
@@ -152,14 +154,12 @@ public class Graph_GUI{
 	public void drawDGraph() {
 		try {
 			if(ga.g.getV() != null && ga.g.getV().size() != 0) {
-	//			StdDraw.setGui(this);
+				StdDraw.setGui(this);
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
 				drawEdges();
 				drawNodes();
-				
-				
 			}
 			else {
 				System.out.println("Nothing to draw");
@@ -295,7 +295,15 @@ public class Graph_GUI{
 				System.out.print(l.getKey()+",");
 		}
 		
-		gg.drawDGraph();
+		Graph_GUI ggg = new Graph_GUI();
+		Node aa = new Node(0,new Point3D(0, 0), 0, "", 0);
+		Node bb = new Node(1,new Point3D(40, 40), 0, "", 0);
+		
+		ggg.addNode(aa);
+		ggg.addNode(bb);
+		
+		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);
+		ggg.drawDGraph();
 
 		/*
 		 * init,save check
@@ -310,11 +318,6 @@ public class Graph_GUI{
 		//				ga3.ga.init("oneWaySquare.txt");
 		//				
 		//				ga3.drawDGraph();
-
-
-
-
-
 	}
 
 }

@@ -35,7 +35,7 @@ public class Node implements node_data, Serializable{
 	 */
 	public Node() {
 		this._data=0;
-		this._p=null;
+		this._p=new Point3D(0, 0);
 		this._weight=0;
 		this._tag=0;
 		this._info="";

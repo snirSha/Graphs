@@ -26,10 +26,11 @@ package utils;
  *       images and strings
  *
  ******************************************************************************/
-
+import java.awt.Container;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.FileDialog;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -37,7 +38,6 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -68,12 +68,19 @@ import java.util.NoSuchElementException;
 import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+
+import algorithms.Graph_Algo;
+import gui.Graph_GUI;
+
 
 /**
  *  The {@code StdDraw} class provides a basic capability for
@@ -480,6 +487,11 @@ import javax.swing.KeyStroke;
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
+	public static Graph_GUI gg;
+	public static void setGui(Graph_GUI g) {
+		gg = g;
+	}
+
 	/**
 	 *  The color black.
 	 */
@@ -630,8 +642,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	// set of key codes currently pressed down
 	private static TreeSet<Integer> keysDown = new TreeSet<Integer>();
 
+
 	// singleton pattern: client can't instantiate
-	private StdDraw() { }
+	public StdDraw() { }
 
 
 	// static initializer
@@ -694,6 +707,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		offscreen.addRenderingHints(hints);
 
 		// frame stuff
+		/*JFrame*/
+
+
+
+
+
+		/*EndJFrame*/
+
 		ImageIcon icon = new ImageIcon(onscreenImage);
 		JLabel draw = new JLabel(icon);
 
@@ -714,15 +735,85 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 	// create the menu bar (changed to private)
 	private static JMenuBar createMenuBar() {
+
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		menuBar.add(menu);
-		JMenuItem menuItem1 = new JMenuItem(" Save...   ");
+		JMenu file = new JMenu("File");
+		JMenu algorithms = new JMenu("Algorithms");
+		JMenu node = new JMenu("Node");
+		JMenu edge = new JMenu("Edge");
+		menuBar.add(file);
+		menuBar.add(algorithms);
+		menuBar.add(node);
+		menuBar.add(edge);
+		
+		JMenuItem menuItem1 = new JMenuItem("Save");
 		menuItem1.addActionListener(std);
 		menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		menu.add(menuItem1);
+		file.add(menuItem1);
+		
+		JMenuItem menuItem2 = new JMenuItem("Init");
+		menuItem2.addActionListener(std);
+		file.add(menuItem2);
+		
+		JMenuItem menuItem3 = new JMenuItem("Is connected");
+		menuItem3.addActionListener(std);
+		algorithms.add(menuItem3);
+		
+		JMenuItem menuItem4 = new JMenuItem("Shortest Path Dist");
+		menuItem4.addActionListener(std);
+		algorithms.add(menuItem4);
+		
+		JMenuItem menuItem5 = new JMenuItem("Shortest Path");
+		menuItem5.addActionListener(std);
+		algorithms.add(menuItem5);
+		
+		JMenuItem menuItem6 = new JMenuItem("TSP");
+		menuItem6.addActionListener(std);
+		algorithms.add(menuItem6);
+		
+		
+
 		return menuBar;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		String str = e.getActionCommand();
+		String file_name;
+		switch (str) {
+		
+		case "Save":
+			file_name = JOptionPane.showInputDialog(null, "File name:");
+			if (gg != null && file_name != null ) {
+				gg.ga.save(file_name);
+			}
+			break;
+
+		case "Init":
+
+			file_name = JOptionPane.showInputDialog(null, "File name:");
+			if (gg != null && file_name != null ) {
+				gg.ga.init(file_name);
+				gg.drawDGraph();
+			}
+			break;
+			
+		case "Is connected":
+			if(gg.ga.isConnected()) {
+				JOptionPane.showMessageDialog(null, "The graph is connected");
+			}
+			else JOptionPane.showMessageDialog(null, "The graph isn't connected");
+			break;
+			
+		case "Shortest Path Dist":
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 
 
@@ -1652,15 +1743,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	/**
 	 * This method cannot be called directly.
 	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		FileDialog chooser = new FileDialog(StdDraw.frame, "Use a .png or .jpg extension", FileDialog.SAVE);
-		chooser.setVisible(true);
-		String filename = chooser.getFile();
-		if (filename != null) {
-			StdDraw.save(chooser.getDirectory() + File.separator + chooser.getFile());
-		}
-	}
+
 
 
 	/***************************************************************************
@@ -1878,28 +1961,28 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 *
 	 * @param args the command-line arguments
 	 */
-	public static void main(String[] args) {
-		StdDraw.square(0.2, 0.8, 0.1);
-		StdDraw.filledSquare(0.8, 0.8, 0.2);
-		StdDraw.circle(0.8, 0.2, 0.2);
-
-		StdDraw.setPenColor(StdDraw.BOOK_RED);
-		StdDraw.setPenRadius(0.02);
-		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
-
-		// draw a blue diamond
-		StdDraw.setPenRadius();
-		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
-		double[] x = { 0.1, 0.2, 0.3, 0.2 };
-		double[] y = { 0.2, 0.3, 0.2, 0.1 };
-		StdDraw.filledPolygon(x, y);
-
-		// text
-		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.text(0.2, 0.5, "black text");
-		StdDraw.setPenColor(StdDraw.WHITE);
-		StdDraw.text(0.8, 0.8, "white text");
-	}
+//	public static void main(String[] args) {
+//		StdDraw.square(0.2, 0.8, 0.1);
+//		StdDraw.filledSquare(0.8, 0.8, 0.2);
+//		StdDraw.circle(0.8, 0.2, 0.2);
+//
+//		StdDraw.setPenColor(StdDraw.BOOK_RED);
+//		StdDraw.setPenRadius(0.02);
+//		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
+//
+//		// draw a blue diamond
+//		StdDraw.setPenRadius();
+//		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
+//		double[] x = { 0.1, 0.2, 0.3, 0.2 };
+//		double[] y = { 0.2, 0.3, 0.2, 0.1 };
+//		StdDraw.filledPolygon(x, y);
+//
+//		// text
+//		StdDraw.setPenColor(StdDraw.BLACK);
+//		StdDraw.text(0.2, 0.5, "black text");
+//		StdDraw.setPenColor(StdDraw.WHITE);
+//		StdDraw.text(0.8, 0.8, "white text");
+//	}
 
 }
 
