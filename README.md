@@ -14,9 +14,9 @@ Omer Kalif
 
 There are five main classes:
 
-* Node class -  * This class represents the set of operations applicable on a node (vertex) in a (directional) weighted graph.
+* Node - This class represents the set of operations applicable on a node (vertex) in a (directional) weighted graph.
 
-* Edge class – This class represents the set of operations applicable on a directional edge(src,dest) in a (directional) weighted graph.
+* Edge – This class represents the set of operations applicable on a directional edge(src,dest) in a (directional) weighted graph.
 
 * DGraph - This class represents a directional weighted graph. The class has a road-system or communication network in mind - and should support a large number of nodes.
 
