@@ -11,6 +11,7 @@ import java.util.HashMap;
  * Contains HashMap data structure for all the nodes in the graph.
  * The key is the data of the node.
  * The value is the node.
+ * 
  * @authors Snir and Omer
 */
 public class DGraph implements graph, Serializable {

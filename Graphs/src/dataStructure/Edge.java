@@ -5,7 +5,8 @@ import dataStructure.edge_data;
 
 /*
  * The implementation of edge_data interface.
- * A regular class with constructors, getters and setters (no data structure) 
+ * A regular class with constructors, getters and setters (no data structure).
+ *  
  * @authors Snir and Omer
  */
 public class Edge implements edge_data, Serializable{

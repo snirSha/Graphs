@@ -16,7 +16,9 @@ import utils.Point3D;
 import utils.StdDraw;
 /*
  * This class draw graphs using stdDraw
- */
+ *
+ * @authors Snir and Omer 
+ */ 
 public class Graph_GUI{
 
 	public Graph_Algo ga;

@@ -10,6 +10,7 @@ import utils.Point3D;
  * Contains HashMap data structure for all the edges that start at this node.
  * The key is the data of the node of the destination.
  * The value is the edge between this node and the destination. 
+ * 
  * @authors Snir and Omer
  */
 public class Node implements node_data, Serializable{
