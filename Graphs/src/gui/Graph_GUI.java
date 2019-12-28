@@ -14,25 +14,42 @@ import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import utils.Point3D;
 import utils.StdDraw;
-
+/*
+ * This class draw graphs using stdDraw
+ */
 public class Graph_GUI{
 
 	public Graph_Algo ga;
 
 
+	/*
+	 * Default constructor
+	 */
 	public Graph_GUI() {
 		ga = new Graph_Algo();
 	}
 
+	/*
+	 * Copy constructor using the init function from Graph_Algo class
+	 */
 	public Graph_GUI(graph g) {		
 		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
 
+	/*
+	 * Add a node to the drawing using addNode function from DGraph
+	 */
 	public void addNode(Node a) {
 		ga.g.addNode(a);
 	}
 
+	/*
+	 * Draw the nodes
+	 * @param x = the x of the node location (point) 
+	 * @param y = the y of the node location (point)
+	 * @param abs = the number of the node
+	 */
 	public void drawNodes() {
 		try {
 			Collection<node_data> n=ga.g.getV();
@@ -51,6 +68,18 @@ public class Graph_GUI{
 		}
 	}
 
+	/*
+	 * Draw the edges
+	 * @param allNodes = A collection of all the nodes
+	 * @param allEdgesOfNode = A collection of all the edges that came out of the parameter's node
+	 * @param Sx = the x of the source location
+	 * @param Sy = the y of the source location
+	 * @param Dx = the x of the destination location
+	 * @param Dy = the y of the destination location
+	 * @param arrowX = the x of the "arrow" point location
+	 * @param arrowY = the y of the "arrow" point location
+	 * @param te = the string of the weight number
+	 */
 	public void drawEdges() {
 		try {
 			Collection<node_data> allNodes=ga.g.getV();
@@ -94,26 +123,41 @@ public class Graph_GUI{
 	}
 
 
+	/*
+	 * Remove node from the drawing using removeNode from DGraph class
+	 */
 	public void removeNode(int x) {
 		ga.g.removeNode(x);
 	}
+	
+	/*
+	 * Remove edge from the drawing using removeEdge from DGraph class 
+	 */
 	public void removeEdge(int x,int y) {
 		ga.g.removeEdge(x,y);
 	}
 
+	/*
+	 * Reverse the graph using reverseGraph in DGraph class
+	 */
 	public void reversedGraph() {
 		ga.g.reversedGraph();
 	}
 
+	/*
+	 * This function open a window and calls to drawNode and drawEdge
+	 */
 	public void drawDGraph() {
 		try {
 			if(ga.g.getV() != null && ga.g.getV().size() != 0) {
+	//			StdDraw.setGui(this);
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
 				StdDraw.setYscale(-100,100);
-
 				drawEdges();
 				drawNodes();
+				
+				
 			}
 			else {
 				System.out.println("Nothing to draw");
@@ -122,10 +166,15 @@ public class Graph_GUI{
 			System.out.println("Nothing to draw");
 		}
 	}
+	
+	/*
+	 * Delete the graph in the drawing
+	 */
 	public void deleteGraph() {
 		StdDraw.clear();
-
+		ga.g=new DGraph();
 	}
+	
 	public static void main (String [] args) {
 		Graph_GUI gg = new Graph_GUI();
 		Point3D p0=new Point3D(-50,50);
