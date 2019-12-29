@@ -57,11 +57,10 @@ public class Graph_Algo implements graph_algorithms{
 		{    
 			FileInputStream file = new FileInputStream(file_name); 
 			ObjectInputStream in = new ObjectInputStream(file);
-			this.g = (DGraph)in.readObject(); 
+			this.g = (DGraph)in.readObject();
 			in.close(); 
 			file.close(); 
 			System.out.println("Object has been deserialized");
-
 		} 
 
 		catch(IOException | ClassNotFoundException ex) 
@@ -338,7 +337,7 @@ public class Graph_Algo implements graph_algorithms{
 			if(targets.size()==2)
 				return array;
 
-			List<node_data> tmp=new ArrayList<>();
+			List<node_data> tmp = new ArrayList<>();
 
 			for (int i = 1; i < targets.size()-1; i++) {
 				int j=i+1;
@@ -367,7 +366,7 @@ public class Graph_Algo implements graph_algorithms{
 	 * @return if all the targets's nodes are in the answer list
 	 */
 	private boolean checkTargetsInAnswer(List<Integer> targets,List<node_data> array) {
-		int counter=0;
+		int counter = 0;
 		for(Integer i:targets) {
 			for(node_data n:array) {
 				if(i==n.getKey()) {
@@ -376,7 +375,7 @@ public class Graph_Algo implements graph_algorithms{
 				}
 			}
 		}
-		return (counter==targets.size());
+		return (counter == targets.size());
 	}
 
 	/*
@@ -392,14 +391,14 @@ public class Graph_Algo implements graph_algorithms{
 					return false;
 			}
 		}
-		int count=0;
+		int count = 0;
 		for(int i:targets) {
 			for(node_data n:nod) {
-				if(i==n.getKey())
+				if(i == n.getKey())
 					count++;
 			}
 		}
-		return (count==targets.size());
+		return (count == targets.size());
 	}
 
 	/*
