@@ -5,11 +5,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import utils.Point3D;
@@ -20,6 +16,7 @@ import utils.StdDraw;
  * @authors Snir and Omer 
  */ 
 public class Graph_GUI{
+	private boolean isDrawed;
 
 	public Graph_Algo ga;
 
@@ -28,13 +25,15 @@ public class Graph_GUI{
 	 * Default constructor
 	 */
 	public Graph_GUI() {
+		isDrawed = false;
 		ga = new Graph_Algo();
 	}
 
 	/*
 	 * Copy constructor using the init function from Graph_Algo class
 	 */
-	public Graph_GUI(graph g) {		
+	public Graph_GUI(graph g) {	
+		isDrawed = false;
 		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
@@ -62,8 +61,9 @@ public class Graph_GUI{
 				StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
 				StdDraw.point(x,y);
 				StdDraw.setPenColor(StdDraw.BLACK);
-				String abs=a.getKey()+"";
+				String abs = a.getKey()+"";
 				StdDraw.text(x,y,abs);
+				
 			}
 		}catch(Exception e) {
 			System.out.println("No nodes to draw");
@@ -123,7 +123,6 @@ public class Graph_GUI{
 		}catch(Exception e) {
 			System.out.println("No edges to Draw");
 		}
-
 	}
 
 
@@ -261,49 +260,51 @@ public class Graph_GUI{
 		 * check shortestPathDist and shortestPath
 		 */
 
-		System.out.println("shortest path is (weight): "+gg.ga.shortestPathDist(2,0));
+//		System.out.println("shortest path is (weight): "+gg.ga.shortestPathDist(2,0));
+//		
+//		System.out.println("isConnected: "+gg.ga.isConnected());
+//
+//		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(2,0);
+//		if(ans!=null) {
+//			System.out.println("List of nodes (shortestPath): ");
+//			for(node_data ar:ans) {
+//				System.out.print(ar.getKey()+",");
+//			}
+//		}
+//		else {
+//			System.out.println("null");
+//		}
+//
+//
+//		/*
+//		 * check TSP
+//		 */
+//
+//		List<Integer> targets=new ArrayList<>();
+//		targets.add(0);
+//		targets.add(3);
+//		targets.add(1);
+//	
+//		List<node_data> answer=gg.ga.TSP(targets);
+//		System.out.println("\nThe TSP List is:");
+//		if(answer==null)
+//			System.out.println("null");
+//		else {
+//			for(node_data l:answer)
+//				System.out.print(l.getKey()+",");
+//		}
 		
-		System.out.println("isConnected: "+gg.ga.isConnected());
-
-		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(2,0);
-		if(ans!=null) {
-			System.out.println("List of nodes (shortestPath): ");
-			for(node_data ar:ans) {
-				System.out.print(ar.getKey()+",");
-			}
-		}
-		else {
-			System.out.println("null");
-		}
-
-
-		/*
-		 * check TSP
-		 */
-
-		List<Integer> targets=new ArrayList<>();
-		targets.add(0);
-		targets.add(3);
-		targets.add(1);
-	
-		List<node_data> answer=gg.ga.TSP(targets);
-		System.out.println("\nThe TSP List is:");
-		if(answer==null)
-			System.out.println("null");
-		else {
-			for(node_data l:answer)
-				System.out.print(l.getKey()+",");
-		}
+//		Graph_GUI ggg = new Graph_GUI();
+//		Node aa = new Node(4,new Point3D(-40, -40), 0, "", 0);
+//		Node bb = new Node(5,new Point3D(30, 40), 0, "", 0);
+//		gg.addNode(aa);
+//		gg.addNode(bb);
+//		gg.ga.g.connect(aa.getKey(), bb.getKey(), 5);
+		gg.ga.g.connect(5, 0, 7);
 		
-		Graph_GUI ggg = new Graph_GUI();
-		Node aa = new Node(0,new Point3D(0, 0), 0, "", 0);
-		Node bb = new Node(1,new Point3D(40, 40), 0, "", 0);
 		
-		ggg.addNode(aa);
-		ggg.addNode(bb);
-		
-		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);
-		ggg.drawDGraph();
+//		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);
+		gg.drawDGraph();
 
 		/*
 		 * init,save check

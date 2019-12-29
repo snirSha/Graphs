@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import utils.StdDraw;
+
 
 /*
  * The implementation of graph interface.
@@ -89,7 +91,7 @@ public class DGraph implements graph, Serializable {
 	 */
 	public void connect(int src, int dest, double w) {
 
-		if(nodes.containsKey(src) && nodes.containsKey(dest) && (src!=dest)) {
+		if(nodes.containsKey(src) && nodes.containsKey(dest) && (src != dest)) {
 			Node n = (Node)nodes.get(src);
 			if(!n.getEdgesOf().containsKey(dest)) {
 				Node s=(Node) nodes.get(src);

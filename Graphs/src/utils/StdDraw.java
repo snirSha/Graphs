@@ -58,17 +58,20 @@ import java.awt.image.WritableRaster;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.NoSuchElementException;
 import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -79,6 +82,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import algorithms.Graph_Algo;
+import dataStructure.Node;
+import dataStructure.node_data;
 import gui.Graph_GUI;
 
 
@@ -745,34 +750,48 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		menuBar.add(algorithms);
 		menuBar.add(node);
 		menuBar.add(edge);
-		
-		JMenuItem menuItem1 = new JMenuItem("Save");
-		menuItem1.addActionListener(std);
-		menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+
+		JMenuItem save = new JMenuItem("Save");
+		save.addActionListener(std);
+		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-		file.add(menuItem1);
+		file.add(save);
+
+		JMenuItem init = new JMenuItem("Init");
+		init.addActionListener(std);
+		file.add(init);
+
+		JMenuItem is_connected = new JMenuItem("Is connected");
+		is_connected.addActionListener(std);
+		algorithms.add(is_connected);
+
+		JMenuItem shortest_path_dist = new JMenuItem("Shortest Path Dist");
+		shortest_path_dist.addActionListener(std);
+		algorithms.add(shortest_path_dist);
+
+		JMenuItem shortest_path = new JMenuItem("Shortest Path");
+		shortest_path.addActionListener(std);
+		algorithms.add(shortest_path);
+
+		JMenuItem tsp = new JMenuItem("TSP");
+		tsp.addActionListener(std);
+		algorithms.add(tsp);
+
+		JMenuItem add_node = new JMenuItem("Add node");
+		add_node.addActionListener(std);
+		node.add(add_node);
+
+		JMenuItem remove_node = new JMenuItem("Remove node");
+		remove_node.addActionListener(std);
+		node.add(remove_node);
 		
-		JMenuItem menuItem2 = new JMenuItem("Init");
-		menuItem2.addActionListener(std);
-		file.add(menuItem2);
+		JMenuItem add_edge = new JMenuItem("Add edge");
+		add_edge.addActionListener(std);
+		edge.add(add_edge);
 		
-		JMenuItem menuItem3 = new JMenuItem("Is connected");
-		menuItem3.addActionListener(std);
-		algorithms.add(menuItem3);
-		
-		JMenuItem menuItem4 = new JMenuItem("Shortest Path Dist");
-		menuItem4.addActionListener(std);
-		algorithms.add(menuItem4);
-		
-		JMenuItem menuItem5 = new JMenuItem("Shortest Path");
-		menuItem5.addActionListener(std);
-		algorithms.add(menuItem5);
-		
-		JMenuItem menuItem6 = new JMenuItem("TSP");
-		menuItem6.addActionListener(std);
-		algorithms.add(menuItem6);
-		
-		
+		JMenuItem remove_edge = new JMenuItem("Remove edge");
+		remove_edge.addActionListener(std);
+		edge.add(remove_edge);
 
 		return menuBar;
 	}
@@ -783,7 +802,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		String str = e.getActionCommand();
 		String file_name;
 		switch (str) {
-		
+
 		case "Save":
 			file_name = JOptionPane.showInputDialog(null, "File name:");
 			if (gg != null && file_name != null ) {
@@ -799,18 +818,107 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				gg.drawDGraph();
 			}
 			break;
-			
+
 		case "Is connected":
 			if(gg.ga.isConnected()) {
 				JOptionPane.showMessageDialog(null, "The graph is connected");
 			}
 			else JOptionPane.showMessageDialog(null, "The graph isn't connected");
 			break;
-			
+
 		case "Shortest Path Dist":
-			
+			JFrame shortestPathDist = new JFrame();
+			String source= JOptionPane.showInputDialog(shortestPathDist,"Please enter Src key.");
+			String dest = JOptionPane.showInputDialog(shortestPathDist,"Please enter Dest key");
+			int srcInt = 0;
+			int dstInt = 0;
+			try {
+				srcInt = Integer.parseInt(source);
+				dstInt = Integer.parseInt(dest);
+				Double ans = gg.ga.shortestPathDist(srcInt, dstInt);
+				JOptionPane.showMessageDialog(null, "Shortest Path Dist is: " + ans);
+			}
+			catch (Exception badInput){
+				System.err.println("Please enter valid keys");
+				JOptionPane.showMessageDialog(shortestPathDist,"Error:Please valid keys ","Error",0);
+			}
 			break;
 
+		case "Shortest Path":
+
+			JFrame SrcAndDist = new JFrame();
+			String Src= JOptionPane.showInputDialog(SrcAndDist,"Please enter Src key.");
+			String Dst = JOptionPane.showInputDialog(SrcAndDist,"Please enter Dest key");
+			int srcNode = 0;
+			int dstNode = 0;
+			try {
+				srcNode = Integer.parseInt(Src);
+				dstNode = Integer.parseInt(Dst);
+				List<node_data> shortestPath = gg.ga.shortestPath(srcNode,dstNode);
+				if(shortestPath != null && gg.ga.g.getNode(srcNode) != null && gg.ga.g.getNode(dstNode) != null) {
+					String way = "";
+					int i = 0;
+					for(node_data nd: shortestPath) {
+						Node n = (Node)nd;
+						way += Integer.toString(n.getKey());
+						if(i < shortestPath.size() - 1)way = way + ", ";
+						i++;
+					}
+					JOptionPane.showMessageDialog(SrcAndDist,"The Shortest path is :" + way);
+				}
+				else JOptionPane.showMessageDialog(null, "No path");
+			}
+			catch (Exception badInput){
+				System.err.println("Please enter valid keys");
+				JOptionPane.showMessageDialog(SrcAndDist,"Error:Please valid keys ","Error",0);
+			}
+			break;
+
+		case "TSP":
+
+			JFrame addNodeFrame = new JFrame();
+			JCheckBox checkBoxArr [] = new JCheckBox[gg.ga.g.getV().size()];
+			int i = 0;
+			for(node_data nd: gg.ga.g.getV()) {
+				Node n = (Node)nd;
+				checkBoxArr[i] = new JCheckBox(Integer.toString(n.getKey()));
+				i++;
+			}
+			String message = "Which nodes?";
+			Object[] params = {message, checkBoxArr};
+			JOptionPane.showConfirmDialog(addNodeFrame, params, "Choose nodes", JOptionPane.DEFAULT_OPTION);
+			List<Integer> selectedNodes = new ArrayList<>();
+			
+			for (int j = 0; j < checkBoxArr.length; j++) {
+				if(checkBoxArr[j].isSelected()) {
+					selectedNodes.add(Integer.parseInt(checkBoxArr[j].getText()));
+				}
+			}
+			
+			String ans = "";
+			List<node_data> list = gg.ga.TSP(selectedNodes);
+			if(list != null) {
+				for(node_data nd: list) {
+					ans += nd.getKey() + " ";
+				}
+				JOptionPane.showMessageDialog(null, "TSP: " + ans);
+			}
+			else JOptionPane.showMessageDialog(null, "No route");
+
+			break;
+			
+		case "Add node":
+			break;
+			
+		case "Remove node":
+			break;
+			
+		case "Add edge":
+			break;
+			
+		case "Remove edge":
+			break;
+			
 		default:
 			break;
 		}
@@ -1961,28 +2069,28 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 *
 	 * @param args the command-line arguments
 	 */
-//	public static void main(String[] args) {
-//		StdDraw.square(0.2, 0.8, 0.1);
-//		StdDraw.filledSquare(0.8, 0.8, 0.2);
-//		StdDraw.circle(0.8, 0.2, 0.2);
-//
-//		StdDraw.setPenColor(StdDraw.BOOK_RED);
-//		StdDraw.setPenRadius(0.02);
-//		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
-//
-//		// draw a blue diamond
-//		StdDraw.setPenRadius();
-//		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
-//		double[] x = { 0.1, 0.2, 0.3, 0.2 };
-//		double[] y = { 0.2, 0.3, 0.2, 0.1 };
-//		StdDraw.filledPolygon(x, y);
-//
-//		// text
-//		StdDraw.setPenColor(StdDraw.BLACK);
-//		StdDraw.text(0.2, 0.5, "black text");
-//		StdDraw.setPenColor(StdDraw.WHITE);
-//		StdDraw.text(0.8, 0.8, "white text");
-//	}
+	//	public static void main(String[] args) {
+	//		StdDraw.square(0.2, 0.8, 0.1);
+	//		StdDraw.filledSquare(0.8, 0.8, 0.2);
+	//		StdDraw.circle(0.8, 0.2, 0.2);
+	//
+	//		StdDraw.setPenColor(StdDraw.BOOK_RED);
+	//		StdDraw.setPenRadius(0.02);
+	//		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
+	//
+	//		// draw a blue diamond
+	//		StdDraw.setPenRadius();
+	//		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
+	//		double[] x = { 0.1, 0.2, 0.3, 0.2 };
+	//		double[] y = { 0.2, 0.3, 0.2, 0.1 };
+	//		StdDraw.filledPolygon(x, y);
+	//
+	//		// text
+	//		StdDraw.setPenColor(StdDraw.BLACK);
+	//		StdDraw.text(0.2, 0.5, "black text");
+	//		StdDraw.setPenColor(StdDraw.WHITE);
+	//		StdDraw.text(0.8, 0.8, "white text");
+	//	}
 
 }
 
