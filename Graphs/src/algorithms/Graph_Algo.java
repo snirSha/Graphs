@@ -102,14 +102,22 @@ public class Graph_Algo implements graph_algorithms{
 	public boolean isConnected() {
 		int ans=isConnectedHelper();
 		switch(ans) {
-		case 0://true
+		case 0://true before reverse
 			return true;
+			
 		case 1://failed before reverse
 			return false;
+			
 		case 2://failed after reverse	
 			zeroTags();
 			g.reversedGraph();
 			return false;
+			
+		case 4://true after reverse
+			zeroTags();
+			g.reversedGraph();
+			return true;
+			
 		default:
 			return false;
 		}
@@ -132,17 +140,18 @@ public class Graph_Algo implements graph_algorithms{
 		else {
 			int x=getFirstNode();
 			zeroTags();
-			DFS(x,g.nodeSize());
-			boolean ans=checkAllTags();
-			if(!ans)
+			DFS(x,g.nodeSize());			
+			if(!checkAllTags())
 				return 1;
 			zeroTags();
 			g.reversedGraph();
+			zeroTags();
 			DFS(x,g.nodeSize());
-			if(checkAllTags())
-				return 0; 
+			if(!checkAllTags()) {
+				return 2; 
+			}
 			else {
-				return 2;
+				return 4;
 			}
 		}
 	}

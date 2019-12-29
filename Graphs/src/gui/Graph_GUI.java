@@ -5,6 +5,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 import algorithms.Graph_Algo;
 import dataStructure.DGraph;
@@ -331,7 +332,6 @@ public class Graph_GUI{
 		
 		
 //		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);
-		gg.drawDGraph();
 		
 
 		/*
@@ -347,6 +347,9 @@ public class Graph_GUI{
 		//				ga3.ga.init("oneWaySquare.txt");
 		//				
 		//				ga3.drawDGraph();
+		
+		gg.drawDGraph();
+
 	}
 
 }
