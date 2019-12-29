@@ -963,9 +963,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 					}else {
 						gg.addNode(new Node(key, new Point3D(x, y)));
-						clear();
-						gg.drawEdges();
-						gg.drawNodes();
+						gg.drawDGraph();
+//						refreshDraw();
 					}
 
 				}catch(Exception err) {
@@ -990,9 +989,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 					int key = Integer.parseInt(removeKeyField.getText());
 					if(gg.ga.g.getNode(key) != null) {
 						gg.removeNode(key);
-						clear();
-						gg.drawEdges();
-						gg.drawNodes();
+						gg.drawDGraph();
+//						refreshDraw();
 					}else {
 						JOptionPane.showMessageDialog(null, "Key does not exist","Error",0);
 					}
@@ -1035,9 +1033,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 						}
 						else {
 							gg.ga.g.connect(sourceInt, destInt, weightDouble);
-							clear();
-							gg.drawEdges();
-							gg.drawNodes();
+							refreshDraw();
 						}
 					}else {
 						JOptionPane.showMessageDialog(null, "Source ot dest does not exist","Error",0);
@@ -1074,9 +1070,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 						Node n = (Node)gg.ga.g.getNode(sourceInt);
 						if(n.getEdgesOf().containsKey(destInt)) {
 							gg.ga.g.removeEdge(sourceInt, destInt);
-							clear();
-							gg.drawEdges();
-							gg.drawNodes();
+							refreshDraw();
 						}else {
 							JOptionPane.showMessageDialog(null, "Edge does not exist","Error",0);
 						}
@@ -1095,6 +1089,12 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		default:
 			break;
 		}
+	}
+	
+	public void refreshDraw() {
+		clear();
+		gg.drawEdges();
+		gg.drawNodes();
 	}
 
 

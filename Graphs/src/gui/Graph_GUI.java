@@ -16,7 +16,7 @@ import utils.StdDraw;
  * @authors Snir and Omer 
  */ 
 public class Graph_GUI{
-	private boolean isDrawed;
+
 
 	public Graph_Algo ga;
 
@@ -25,7 +25,7 @@ public class Graph_GUI{
 	 * Default constructor
 	 */
 	public Graph_GUI() {
-		isDrawed = false;
+		
 		ga = new Graph_Algo();
 	}
 
@@ -33,7 +33,7 @@ public class Graph_GUI{
 	 * Copy constructor using the init function from Graph_Algo class
 	 */
 	public Graph_GUI(graph g) {	
-		isDrawed = false;
+		
 		this.ga = new Graph_Algo();
 		ga.init(g);
 	}
@@ -155,10 +155,12 @@ public class Graph_GUI{
 			if(ga.g.getV() != null) {
 				StdDraw.setGui(this);
 				
-				StdDraw.setCanvasSize(1000, 1000);
-				StdDraw.setXscale(-100,100);
-				StdDraw.setYscale(-100,100);
 				
+				
+//				StdDraw.setCanvasSize(1000, 1000);
+//				StdDraw.setXscale(-100,100);
+//				StdDraw.setYscale(-100,100);
+				setPageSize();
 				drawEdges();
 				drawNodes();
 			}
@@ -170,12 +172,34 @@ public class Graph_GUI{
 		}
 	}
 	
+	private void setPageSize() {
+		double xMax = 0;
+		double xMin = 0;
+		double yMax = 0;
+		double yMin = 0;
+		for(node_data nd: ga.g.getV()) {
+			Node n = (Node)nd;
+			if(n.getLocation().x() > xMax) xMax = n.getLocation().x();
+			else if (n.getLocation().x() < xMin) xMin = n.getLocation().x();
+			if(n.getLocation().y() > yMax) yMax = n.getLocation().y();
+			else if (n.getLocation().y() < yMin) yMin = n.getLocation().y();
+		}
+		
+		int xCanvas = 5 * (int)(Math.abs(xMax) + Math.abs(xMin));
+		int yCanvas = 5 * (int)(Math.abs(yMax) + Math.abs(yMin));
+		
+		StdDraw.setCanvasSize(xCanvas , yCanvas );
+		StdDraw.setXscale(2 * xMin, 2 * xMax);
+		StdDraw.setYscale(2 * yMin,2 * yMax);
+		
+	}
+
 	/*
 	 * Delete the graph in the drawing
 	 */
 	public void deleteGraph() {
 		StdDraw.clear();
-		ga.g=new DGraph();
+		ga.g = new DGraph();
 	}
 	
 	public static void main (String [] args) {
@@ -196,6 +220,7 @@ public class Graph_GUI{
 		Node b=new Node(1,p1, 0, "sad", 0);
 		Node c=new Node(2,p2, 0, "warryetj", 0);
 		Node d=new Node(3,p3, 0, "", 0);
+		Node e=new Node(4, new Point3D(100, 100), 0, "", 0);
 		//		Node d=new Node(p4, 0, "", 0);	
 		//		Node e=new Node(p5, 0, "", 0);
 		//		Node f=new Node(p6, 0, "", 0);
@@ -208,6 +233,7 @@ public class Graph_GUI{
 		gg.addNode(b);
 		gg.addNode(c);
 		gg.addNode(d);
+		//gg.addNode(e);
 		//		gg.addNode(d);
 		//		gg.addNode(e);
 		//		gg.addNode(f);
