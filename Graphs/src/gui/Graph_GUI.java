@@ -300,7 +300,6 @@ public class Graph_GUI{
 //		gg.addNode(aa);
 //		gg.addNode(bb);
 //		gg.ga.g.connect(aa.getKey(), bb.getKey(), 5);
-		gg.ga.g.connect(5, 0, 7);
 		
 		
 //		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);

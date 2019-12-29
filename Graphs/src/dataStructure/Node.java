@@ -67,6 +67,15 @@ public class Node implements node_data, Serializable{
 		_tag = other._tag;
 	}
 	
+	public Node(int key, Point3D point3d) {
+		this._data = key;
+		this._p = new Point3D(point3d.x(), point3d.y());
+		_weight = 0;
+		_info = "";
+		_tag = 0;
+		
+	}
+
 	/*
 	 * This function add a Edge to the HashMap
 	 */
