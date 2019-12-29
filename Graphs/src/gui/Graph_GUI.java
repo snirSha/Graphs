@@ -152,7 +152,7 @@ public class Graph_GUI{
 	 */
 	public void drawDGraph() {
 		try {
-			if(ga.g.getV() != null && ga.g.getV().size() != 0) {
+			if(ga.g.getV() != null) {
 				StdDraw.setGui(this);
 				StdDraw.setCanvasSize(1000, 1000);
 				StdDraw.setXscale(-100,100);
