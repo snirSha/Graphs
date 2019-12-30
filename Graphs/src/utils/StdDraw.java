@@ -931,7 +931,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 					}
 					JOptionPane.showMessageDialog(null, "TSP: " + ans.toString());
 				}
-				else JOptionPane.showMessageDialog(null, "No route");
+				else JOptionPane.showMessageDialog(null, "No route (The graph should be strongly connnected)");
 			}
 			
 			break;

@@ -91,39 +91,6 @@ public class Graph_Algo implements graph_algorithms{
 	}
 
 	/*
-	 * @param ans = can get 0/1/2 :  
-	 * 0 = The graph is connected
-	 * 1 = The graph is not connected and the helper function didn't use the reverseGraph function
-	 * 2 = The graph is not connected and the helper function used the reverseGraph function
-	 * 
-	 * @function isConnectedHelper = A helper function that uses DFS, reverseGraph and DFS again to make sure this graph is connected
-	 */
-	@Override
-	public boolean isConnected() {
-		int ans=isConnectedHelper();
-		switch(ans) {
-		case 0://true before reverse
-			return true;
-			
-		case 1://failed before reverse
-			return false;
-			
-		case 2://failed after reverse	
-			zeroTags();
-			g.reversedGraph();
-			return false;
-			
-		case 4://true after reverse
-			zeroTags();
-			g.reversedGraph();
-			return true;
-			
-		default:
-			return false;
-		}
-	}
-
-	/*
 	 * The function's steps: 
 	 * zero all tags in every node -> DFS -> check if all tags are 1 -> if true ,zero all tags and reverse the graph
 	 * -> DFS again -> check if all tags are 1-> if true, the graph is strongly connected 
@@ -133,26 +100,30 @@ public class Graph_Algo implements graph_algorithms{
 	 * @function zeroTags = sets all node's tag to 0
 	 * @function DFS = start at a node and keep going until it set all the node's tag to 1, if not the graph is not connected 
 	 * @function checkAllTags = check if all the node's tag is 1 
+	 * @return true if the graph is strongly connected
 	 */
-	public int isConnectedHelper() {
+	@Override
+	public boolean isConnected() {
 		if(g.nodeSize()==0)
-			return 0;
+			return true;
 		else {
 			int x=getFirstNode();
 			zeroTags();
 			DFS(x,g.nodeSize());			
 			if(!checkAllTags())
-				return 1;
+				return false;
 			zeroTags();
 			g.reversedGraph();
 			zeroTags();
 			DFS(x,g.nodeSize());
+
+			boolean ans=true;
 			if(!checkAllTags()) {
-				return 2; 
+				ans= false; 
 			}
-			else {
-				return 4;
-			}
+			zeroTags();
+			g.reversedGraph();
+			return ans;
 		}
 	}
 
