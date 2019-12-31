@@ -209,145 +209,26 @@ public class Graph_GUI{
 		Point3D p1=new Point3D(50,50);
 		Point3D p2=new Point3D(0,0);
 		Point3D p3=new Point3D(0,-50);
-		//		Point3D p4=new Point3D(0,50);
-		//		Point3D p5=new Point3D(10,40);
-		//		Point3D p6=new Point3D(10,30);
-		//		Point3D p7=new Point3D(0,10);
-		//		Point3D p8=new Point3D(-10,2);
-		//		Point3D p9=new Point3D(-50,-1);
-		//		Point3D p10=new Point3D(60,-10);
 
 		Node a=new Node(0,p0 ,0, "", 0);
-		Node b=new Node(1,p1, 0, "sad", 0);
-		Node c=new Node(2,p2, 0, "warryetj", 0);
+		Node b=new Node(1,p1, 0, "", 0);
+		Node c=new Node(2,p2, 0, "", 0);
 		Node d=new Node(3,p3, 0, "", 0);
 		Node e=new Node(4, new Point3D(100, 100), 0, "", 0);
-		//		Node d=new Node(p4, 0, "", 0);	
-		//		Node e=new Node(p5, 0, "", 0);
-		//		Node f=new Node(p6, 0, "", 0);
-		//		Node j=new Node(p7, 0, "", 0);
-		//		Node h=new Node(p8, 0, "", 0);
-		//		Node i=new Node(p9, 0, "", 0);
-		//		Node k=new Node(p10, 0,"", 0);
+
 
 		gg.addNode(a);
 		gg.addNode(b);
 		gg.addNode(c);
 		gg.addNode(d);
-		//gg.addNode(e);
-		//		gg.addNode(d);
-		//		gg.addNode(e);
-		//		gg.addNode(f);
-		//		gg.addNode(j);
-		//		gg.addNode(h);
-		//		gg.addNode(i);
-		//		gg.addNode(k);
 
-
-		//gg.ga.g.connect(a.getKey(),b.getKey(),4);
 		gg.ga.g.connect(c.getKey(),a.getKey(), 1);
 		gg.ga.g.connect(c.getKey(),d.getKey(),2);
 		gg.ga.g.connect(c.getKey(),b.getKey(), 3);
 		gg.ga.g.connect(a.getKey(), c.getKey(), 2.5);
 		gg.ga.g.connect(b.getKey(), c.getKey(), 1.5);
 		gg.ga.g.connect(d.getKey(), c.getKey(), 3);
-		//gg.ga.g.connect(b.getKey(), a.getKey(), 4);		
 
-		//	gg.drawDGraph();
-		//		gg.g.connect(a.getKey(),e.getKey(),12);
-		//		gg.g.connect(b.getKey(),f.getKey(), 0);
-		//		gg.g.connect(b.getKey(),j.getKey(),1);
-		//		gg.g.connect(c.getKey(),h.getKey(), 4);
-		//		gg.g.connect(c.getKey(), i.getKey(), 5);
-		//		gg.g.connect(d.getKey(), k.getKey(), 14);
-		//		gg.g.connect(e.getKey(),k.getKey(), 0);
-		//		gg.g.connect(f.getKey(),k.getKey(), 2);
-		//		gg.g.connect(j.getKey(),k.getKey(), 15);
-		//		gg.g.connect(h.getKey(),k.getKey(), 20);
-		//		gg.g.connect(i.getKey(),k.getKey(), 35);
-
-		/*
-		 * check remove
-		 */
-		//gg.removeEdge(0, 1);
-
-
-
-
-		//		System.out.println(gg.g.nodeSize());
-		//		System.out.println(gg.g.edgeSize());
-		//		gg.removeNode(0);
-		//		System.out.println(gg.g.edgeSize());
-		//		System.out.println(gg.g.nodeSize());
-		//		System.out.println(gg.g.edgeSize());
-		//gg.removeEdge(0, 2);
-		//System.out.println(gg.g.edgeSize());
-		//StdDraw.clear();
-
-
-		/*
-		 * check shortestPathDist and shortestPath
-		 */
-
-//		System.out.println("shortest path is (weight): "+gg.ga.shortestPathDist(2,0));
-//		
-//		System.out.println("isConnected: "+gg.ga.isConnected());
-//
-//		ArrayList<node_data> ans=(ArrayList<node_data>) gg.ga.shortestPath(2,0);
-//		if(ans!=null) {
-//			System.out.println("List of nodes (shortestPath): ");
-//			for(node_data ar:ans) {
-//				System.out.print(ar.getKey()+",");
-//			}
-//		}
-//		else {
-//			System.out.println("null");
-//		}
-//
-//
-//		/*
-//		 * check TSP
-//		 */
-//
-//		List<Integer> targets=new ArrayList<>();
-//		targets.add(0);
-//		targets.add(3);
-//		targets.add(1);
-//	
-//		List<node_data> answer=gg.ga.TSP(targets);
-//		System.out.println("\nThe TSP List is:");
-//		if(answer==null)
-//			System.out.println("null");
-//		else {
-//			for(node_data l:answer)
-//				System.out.print(l.getKey()+",");
-//		}
-		
-//		Graph_GUI ggg = new Graph_GUI();
-//		Node aa = new Node(4,new Point3D(-40, -40), 0, "", 0);
-//		Node bb = new Node(5,new Point3D(30, 40), 0, "", 0);
-//		gg.addNode(aa);
-//		gg.addNode(bb);
-//		gg.ga.g.connect(aa.getKey(), bb.getKey(), 5);
-		
-		
-//		ggg.ga.g.connect(aa.getKey(), bb.getKey(), 3);
-		
-
-		/*
-		 * init,save check
-		 */
-		//				Graph_GUI oneWaySquare = new Graph_GUI();
-		//				oneWaySquare.g = (DGraph) gg.ga.copy();
-		//				
-		//				oneWaySquare.ga.save("oneWaySquare.txt");
-		//				
-		//				Graph_GUI ga3 = new Graph_GUI();
-		//				
-		//				ga3.ga.init("oneWaySquare.txt");
-		//				
-		//				ga3.drawDGraph();
-		
 		gg.drawDGraph();
 
 	}

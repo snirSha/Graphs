@@ -306,13 +306,20 @@ public class Graph_Algo implements graph_algorithms{
 	 */
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets)) && isConnected()) {
+		if((!targets.isEmpty()) && (targets.size()<=g.nodeSize()) && (checkTargetsInGraph(targets))) {
+			Graph_Algo test = new Graph_Algo();
+			for(Integer i: targets) {
+				test.g.addNode(this.g.getNode(i));
+			}
+			Graph_Algo gaTest = new Graph_Algo();
+			
+			if(!gaTest.isConnected()) return null;
 			List<node_data> array=new ArrayList<>();
 			if(targets.size()==1) {
 				array.add(g.getNode(targets.get(0)));
 				return array;
 			}
-
+			if(shortestPath(targets.get(0),targets.get(1)) == null) return null;
 			array.addAll((shortestPath(targets.get(0),targets.get(1))));
 			if(targets.size()==2)
 				return array;
@@ -321,6 +328,7 @@ public class Graph_Algo implements graph_algorithms{
 
 			for (int i = 1; i < targets.size()-1; i++) {
 				int j=i+1;
+				if(shortestPath(targets.get(i),targets.get(j)) == null) return null;
 				tmp.addAll(shortestPath(targets.get(i),targets.get(j)));
 				if((tmp!=null) && checkTargetsInAnswer(targets,tmp) && tmp.containsAll(array)) {
 					return tmp;
