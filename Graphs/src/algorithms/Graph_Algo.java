@@ -316,9 +316,8 @@ public class Graph_Algo implements graph_algorithms{
 			for(Integer i: targets) {
 				test.g.addNode(this.g.getNode(i));
 			}
-			Graph_Algo gaTest = new Graph_Algo();
 			
-			if(!gaTest.isConnected()) return null;
+			if(!test.isConnected()) return null;
 			List<node_data> array=new ArrayList<>();
 			if(targets.size()==1) {
 				array.add(g.getNode(targets.get(0)));
