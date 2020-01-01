@@ -55,17 +55,19 @@ public class Graph_GUI{
 	public void drawNodes() {
 		try {
 			Collection<node_data> n=ga.g.getV();
-			for (node_data a:n) {
-				double x=a.getLocation().x();
-				double y=a.getLocation().y();
-				StdDraw.setPenRadius(0.05);
-				StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
-				StdDraw.point(x,y);
-				StdDraw.setPenColor(StdDraw.BLACK);
-				String abs = a.getKey()+"";
-				StdDraw.text(x,y,abs);
-				
+			if(n != null && n.size() > 0) {
+				for (node_data a:n) {
+					double x=a.getLocation().x();
+					double y=a.getLocation().y();
+					StdDraw.setPenRadius(0.05);
+					StdDraw.setPenColor(StdDraw.BLUE);//nodes in blue
+					StdDraw.point(x,y);
+					StdDraw.setPenColor(StdDraw.BLACK);
+					String abs = a.getKey()+"";
+					StdDraw.text(x,y,abs);
+				}
 			}
+			
 		}catch(Exception e) {
 			System.out.println("No nodes to draw");
 		}
@@ -86,7 +88,7 @@ public class Graph_GUI{
 	public void drawEdges() {
 		try {
 			Collection<node_data> allNodes=ga.g.getV();
-			if(allNodes != null) {
+			if(allNodes != null && allNodes.size() > 0) {
 				for(node_data n:allNodes) {
 					Collection<edge_data> allEdgesOfNode=ga.g.getE(n.getKey());
 					if(allEdgesOfNode != null && allEdgesOfNode.size() > 0) {
@@ -165,9 +167,6 @@ public class Graph_GUI{
 				drawEdges();
 				drawNodes();
 			}
-			else {
-				System.out.println("Nothing to draw");
-			}
 		}catch(Exception e){
 			System.out.println("Nothing to draw");
 		}
@@ -178,20 +177,28 @@ public class Graph_GUI{
 		double xMin = 0;
 		double yMax = 0;
 		double yMin = 0;
-		for(node_data nd: ga.g.getV()) {
-			Node n = (Node)nd;
-			if(n.getLocation().x() > xMax) xMax = n.getLocation().x();
-			else if (n.getLocation().x() < xMin) xMin = n.getLocation().x();
-			if(n.getLocation().y() > yMax) yMax = n.getLocation().y();
-			else if (n.getLocation().y() < yMin) yMin = n.getLocation().y();
+		Collection <node_data> col = ga.g.getV();
+		if(col != null && col.size() > 0) {
+			for(node_data nd: col) {
+				Node n = (Node)nd;
+				if(n.getLocation().x() > xMax) xMax = n.getLocation().x();
+				else if (n.getLocation().x() < xMin) xMin = n.getLocation().x();
+				if(n.getLocation().y() > yMax) yMax = n.getLocation().y();
+				else if (n.getLocation().y() < yMin) yMin = n.getLocation().y();
+			}
+			
+			int xCanvas = 5 * (int)(Math.abs(xMax) + Math.abs(xMin));
+			int yCanvas = 5 * (int)(Math.abs(yMax) + Math.abs(yMin));
+			
+			StdDraw.setCanvasSize(xCanvas , yCanvas );
+			StdDraw.setXscale(2 * xMin, 2 * xMax);
+			StdDraw.setYscale(2 * yMin,2 * yMax);
+		}else {
+			StdDraw.setCanvasSize(1000, 800);
+			StdDraw.setXscale(-100,100);
+			StdDraw.setYscale(-100,100);
 		}
 		
-		int xCanvas = 5 * (int)(Math.abs(xMax) + Math.abs(xMin));
-		int yCanvas = 5 * (int)(Math.abs(yMax) + Math.abs(yMin));
-		
-		StdDraw.setCanvasSize(xCanvas , yCanvas );
-		StdDraw.setXscale(2 * xMin, 2 * xMax);
-		StdDraw.setYscale(2 * yMin,2 * yMax);
 		
 	}
 
@@ -230,6 +237,8 @@ public class Graph_GUI{
 		gg.ga.g.connect(d.getKey(), c.getKey(), 3);
 
 		gg.drawDGraph();
+		
+
 
 	}
 
