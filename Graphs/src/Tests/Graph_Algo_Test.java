@@ -199,6 +199,7 @@ class Graph_Algo_Test {
 
 		List<Integer> targets=new ArrayList<>();
 		targets.add(1);
+		targets.add(0);
 		targets.add(2);
 		targets.add(3);
 		targets.add(4);
@@ -215,7 +216,7 @@ class Graph_Algo_Test {
 		myAns.add(ga.g.getNode(4));
 		myAns.add(ga.g.getNode(0));
 		myAns.add(ga.g.getNode(5));
-				
+		System.out.println(myAns+"\n"+ans);
 		assertEquals(myAns,ans);
 		
 		ga.g.removeNode(0);
