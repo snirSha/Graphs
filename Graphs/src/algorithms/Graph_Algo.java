@@ -40,6 +40,11 @@ public class Graph_Algo implements graph_algorithms{
 		this.g = new DGraph();
 	}
 
+	public Graph_Algo(graph _graph) {
+		this.g = new DGraph();
+		init(_graph);
+	}
+
 	/*
 	 * Set this graph to the parameter's graph
 	 */
