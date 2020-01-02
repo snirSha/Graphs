@@ -963,8 +963,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 					}else {
 						gg.addNode(new Node(key, new Point3D(x, y)));
-						gg.drawDGraph();
-//						refreshDraw();
 					}
 
 				}catch(Exception err) {

@@ -20,6 +20,7 @@ public class Graph_GUI{
 
 
 	public Graph_Algo ga;
+	private boolean isDraw;
 
 
 	/*
@@ -28,6 +29,7 @@ public class Graph_GUI{
 	public Graph_GUI() {
 		
 		ga = new Graph_Algo();
+		isDraw = false;
 	}
 
 	/*
@@ -37,6 +39,7 @@ public class Graph_GUI{
 		
 		this.ga = new Graph_Algo();
 		ga.init(g);
+		isDraw = false;
 	}
 
 	/*
@@ -44,7 +47,11 @@ public class Graph_GUI{
 	 */
 	public void addNode(Node a) {
 		ga.g.addNode(a);
+		if(isDraw) {
+			drawDGraph();
+		}
 	}
+	
 
 	/*
 	 * Draw the nodes
@@ -154,15 +161,10 @@ public class Graph_GUI{
 	 * This function open a window and calls to drawNode and drawEdge
 	 */
 	public void drawDGraph() {
+		isDraw = true;
 		try {
 			if(ga.g.getV() != null) {
 				StdDraw.setGui(this);
-				
-				
-				
-//				StdDraw.setCanvasSize(1000, 1000);
-//				StdDraw.setXscale(-100,100);
-//				StdDraw.setYscale(-100,100);
 				setPageSize();
 				drawEdges();
 				drawNodes();
@@ -192,7 +194,7 @@ public class Graph_GUI{
 			
 			StdDraw.setCanvasSize(xCanvas , yCanvas );
 			StdDraw.setXscale(2 * xMin, 2 * xMax);
-			StdDraw.setYscale(2 * yMin,2 * yMax);
+			StdDraw.setYscale(2 * yMin, 2 * yMax);
 		}else {
 			StdDraw.setCanvasSize(1000, 800);
 			StdDraw.setXscale(-100,100);
@@ -236,9 +238,14 @@ public class Graph_GUI{
 		gg.ga.g.connect(b.getKey(), c.getKey(), 1.5);
 		gg.ga.g.connect(d.getKey(), c.getKey(), 3);
 
+		
+		
+		
+		
+		
 		gg.drawDGraph();
 		
-
+		gg.addNode(e);
 
 	}
 
