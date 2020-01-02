@@ -199,7 +199,6 @@ class Graph_Algo_Test {
 
 		List<Integer> targets=new ArrayList<>();
 		targets.add(1);
-		targets.add(0);
 		targets.add(2);
 		targets.add(3);
 		targets.add(4);
