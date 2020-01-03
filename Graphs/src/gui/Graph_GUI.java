@@ -189,12 +189,12 @@ public class Graph_GUI{
 				else if (n.getLocation().y() < yMin) yMin = n.getLocation().y();
 			}
 			
-			int xCanvas = 5 * (int)(Math.abs(xMax) + Math.abs(xMin));
-			int yCanvas = 5 * (int)(Math.abs(yMax) + Math.abs(yMin));
+			int xCanvas = 3 * (int)(Math.abs(xMax) + Math.abs(xMin));
+			int yCanvas = 3 * (int)(Math.abs(yMax) + Math.abs(yMin));
 			
 			StdDraw.setCanvasSize(xCanvas , yCanvas );
-			StdDraw.setXscale(2 * xMin, 2 * xMax);
-			StdDraw.setYscale(2 * yMin, 2 * yMax);
+			StdDraw.setXscale(xMin - 10, xMax + 10);
+			StdDraw.setYscale(yMin - 10, yMax + 10);
 		}else {
 			StdDraw.setCanvasSize(1000, 800);
 			StdDraw.setXscale(-100,100);
@@ -239,13 +239,9 @@ public class Graph_GUI{
 		gg.ga.g.connect(d.getKey(), c.getKey(), 3);
 
 		
-		
-		
-		
-		
 		gg.drawDGraph();
 		
-		gg.addNode(e);
+
 
 	}
 
